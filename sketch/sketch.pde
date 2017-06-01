@@ -2,7 +2,7 @@ PImage img;
 
 void setup() {
   size(1280, 720);
-  img = loadImage("map_00.png");
+  PImage img = loadImage("map_00.png");
 }
 
 void draw() {
