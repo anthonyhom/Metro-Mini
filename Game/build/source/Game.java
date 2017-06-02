@@ -15,10 +15,12 @@ import java.io.IOException;
 public class Game extends PApplet {
 
 GameClass game;
+boolean mouseDrag, mousePress;
 
 public void setup() {
     
     game = new GameClass(new Map("../Maps/Map-London.png"));
+    //frameRate(30);
 }
 
 public void draw() {
@@ -35,8 +37,31 @@ public void draw() {
         catch (InterruptedException e) { }
     }
     game.run();
-    for (Station station : game.stations)
+    for (Station station : game.stations) {
         image(station.image, station.x, station.y);
+        if (mousePress) {
+            if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
+                mouseY > station.y - 45 && mouseY < station.y + 45) {
+                PImage ripple = loadImage(station.filename);
+                ripple.resize(60, 60);
+                image(ripple, station.x - 5, station.y - 5);
+                fill(255);
+            }
+        }
+    }
+}
+
+public void mouseDragged() {
+    mouseDrag = true;
+}
+
+public void mousePressed() {
+    mousePress = true;
+}
+
+public void mouseReleased() {
+    mouseDrag = false;
+    mousePress = false;
 }
 
 
@@ -54,8 +79,12 @@ class GameClass {
         this.paused = false;
         this.proc = 0;
         this.stations = new ArrayList<Station>();
-        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
-        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
+        int i = 2;
+        while (i > 0) {
+            if (addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
+                i -= 1;
+            }
+        }
     }
 
     GameClass(Map map) {
@@ -64,8 +93,12 @@ class GameClass {
         this.paused = false;
         this.proc = 0;
         this.stations = new ArrayList<Station>();
-        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
-        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
+        int i = 2;
+        while (i > 0) {
+            if (addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
+                i -= 1;
+            }
+        }
     }
 
     public boolean addStation(Station station) {
@@ -81,7 +114,7 @@ class GameClass {
     public void run() {
         proc += 1;
         boolean b = false;
-        if (proc % 100 == 0 && ! b)
+        if (proc % 1000 == 0 && ! b)
             b = addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
     }
 
@@ -108,9 +141,15 @@ class Passenger {
     int patience;
     PImage image;
 
-    Passenger(int patience) {
-        this.patience = patience;
+    Passenger() {
+        this.patience = 10000;
     }
+
+}
+
+
+
+class Route {
 
 }
 
