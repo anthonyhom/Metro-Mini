@@ -15,11 +15,12 @@ import java.io.IOException;
 public class Game extends PApplet {
 
 GameClass game;
-boolean mouseDrag, mousePress;
+boolean mouseDrag, mousePress, paused;
 
 public void setup() {
     
     game = new GameClass(new Map("../Maps/Map-London.png"));
+    paused = false;
     //frameRate(30);
 }
 
@@ -28,26 +29,18 @@ public void draw() {
     image(game.map.image, 0, 0);
     textSize(32);
     text(game.proc + "", 90, 90);
-    fill(0, 0, 0);
-    if (! game.paused) {
-        try {
-            Thread.sleep(0);
-            game.proc += 1;
-        }
-        catch (InterruptedException e) { }
-    }
+    fill(0);
+    if (! paused)
+        this.game.proc += 1;
     game.run();
-    for (Station station : game.stations) {
-        image(station.image, station.x, station.y);
-        if (mousePress) {
-            if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
-                mouseY > station.y - 45 && mouseY < station.y + 45) {
-                PImage ripple = loadImage(station.filename);
-                ripple.resize(60, 60);
-                image(ripple, station.x - 5, station.y - 5);
-                fill(255);
-            }
-        }
+}
+
+public void keyPressed() {
+    if (key == 27) {
+        key = 32;
+    }
+    if (key == 32) {
+        paused = ! paused;
     }
 }
 
@@ -81,7 +74,7 @@ class GameClass {
         this.stations = new ArrayList<Station>();
         int i = 2;
         while (i > 0) {
-            if (addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
+            if (addStation(new Station((int) random(1, 16) * 120, (int) random(1, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
                 i -= 1;
             }
         }
@@ -95,7 +88,7 @@ class GameClass {
         this.stations = new ArrayList<Station>();
         int i = 2;
         while (i > 0) {
-            if (addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
+            if (addStation(new Station((int) random(1, 16) * 120, (int) random(1, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
                 i -= 1;
             }
         }
@@ -112,10 +105,27 @@ class GameClass {
     }
 
     public void run() {
-        proc += 1;
         boolean b = false;
         if (proc % 1000 == 0 && ! b)
-            b = addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
+            b = addStation(new Station((int) random(1, 16) * 120, (int) random(1, 9) * 120, shapes[(int) random(0, 3)], numStations));
+        for (Station station : game.stations) {
+            if (mousePress) {
+                if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
+                    mouseY > station.y - 45 && mouseY < station.y + 45) {
+                    PImage ripple = loadImage(station.filename);
+                    ripple.resize(60, 60);
+                    image(ripple, station.x - 7, station.y - 7);
+                }
+            }
+            if (mouseDrag) {
+                //if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
+                //    mouseY > station.y - 45 && mouseY < station.y + 45) {
+                    stroke(0);
+                    line(mouseX, mouseY, station.x + 22, station.y + 22);
+                //}
+            }
+            image(station.image, station.x, station.y);
+        }
     }
 
 }
