@@ -9,7 +9,7 @@ void draw() {
     background(0);
     image(game.map.image, 0, 0);
     textSize(32);
-    text(game.proc + "", 1920 / 2, 1080 / 2);
+    text(game.proc + "", 90, 90);
     fill(0, 0, 0);
     if (! game.paused) {
         try {
@@ -27,7 +27,7 @@ void draw() {
 
 class GameClass {
 
-    ArrayList<Station> stations = new ArrayList<Station>();
+    ArrayList<Station> stations;
     boolean paused;
     int numStations, proc;
     Map map;
@@ -37,6 +37,9 @@ class GameClass {
         this.numStations = 0;
         this.paused = false;
         this.proc = 0;
+        this.stations = new ArrayList<Station>();
+        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
+        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
     }
 
     GameClass(Map map) {
@@ -44,12 +47,16 @@ class GameClass {
         this.numStations = 0;
         this.paused = false;
         this.proc = 0;
+        this.stations = new ArrayList<Station>();
+        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
+        addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
     }
 
     boolean addStation(Station station) {
-        if (map.image.get(station.x, station.y) == color(224, 224, 224)) {
+        if (map.image.get(station.x, station.y) == color(224)) {
             stations.add(station);
             numStations += 1;
+            map.image.set(station.x, station.y, color(0));
             return true;
         }
         return false;
@@ -58,8 +65,8 @@ class GameClass {
     void run() {
         proc += 1;
         boolean b = false;
-        if (proc % 1000 == 0 && ! b)
-            b = addStation(new Station((int) random(0, 1920), (int) random(0, 1080), shapes[(int) random(0, 3)], numStations));
+        if (proc % 100 == 0 && ! b)
+            b = addStation(new Station((int) random(0, 16) * 120, (int) random(0, 9) * 120, shapes[(int) random(0, 3)], numStations));
     }
 
 }
