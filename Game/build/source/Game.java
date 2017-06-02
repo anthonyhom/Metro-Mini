@@ -76,9 +76,9 @@ class GameClass {
         this.paused = false;
         this.proc = 0;
         this.stations = new ArrayList<Station>();
-        int i = 2;
+        int i = 1;
         while (i > 0) {
-            if (addStation(new Station((int) random(1, 16) * 120, (int) random(1, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
+            if (addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations))) {
                 i -= 1;
             }
         }
@@ -90,9 +90,9 @@ class GameClass {
         this.paused = false;
         this.proc = 0;
         this.stations = new ArrayList<Station>();
-        int i = 2;
+        int i = 1;
         while (i > 0) {
-            if (addStation(new Station((int) random(1, 16) * 120, (int) random(1, 9) * 120, shapes[(int) random(0, 3)], numStations))) {
+            if (addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations))) {
                 i -= 1;
             }
         }
@@ -111,7 +111,10 @@ class GameClass {
     public void run() {
         boolean b = false;
         if (proc % 1000 == 0 && ! b)
-            b = addStation(new Station((int) random(1, 16) * 120, (int) random(1, 9) * 120, shapes[(int) random(0, 3)], numStations));
+            b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
+        if (proc % 50 == 0)
+            stations.set(stations.get((int) random(0, stations.size)),
+                         stations.get((int) random(0, stations.size)).addPassenger(new Passenger(stations.get((int) random(0, stations.size())))));
         for (Station station : game.stations) {
             if (mousePress) {
                 if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
@@ -129,7 +132,10 @@ class GameClass {
                 //}
             }
             image(station.image, station.x, station.y);
+            for (int i = 45, j = 0; i < station.passengers.size(); i += 1, j += 15)
+                image(station.passengers.get(i).image, station.x + j, station.y);
         }
+        image(new Passenger(stations.get(0)).image, 180, 180);
     }
 
 }
@@ -143,7 +149,7 @@ class Map {
 
     Map(String filename) {
         this.filename = filename;
-        this.image = loadImage(filename);
+        this.image = loadImage(this.filename);
     }
 
 }
@@ -154,9 +160,24 @@ class Passenger {
 
     int patience;
     PImage image;
+    String filename, shape;
+    Station current, destination;
 
     Passenger() {
         this.patience = 10000;
+    }
+
+    Passenger(Station destination) {
+        this.destination = destination;
+        this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
+        this.image = loadImage(filename);
+    }
+
+    Passenger(Station current, Station destination) {
+        this.current = current;
+        this.destination = destination;
+        this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
+        this.image = loadImage(filename);
     }
 
 }
@@ -171,15 +192,26 @@ class Route {
 
 class Station {
 
+    ArrayList<Passenger> passengers;
     int x, y, id;
     PImage image;
-    String filename;
+    String filename, shape;
 
     Station(int x, int y, String shape, int id) {
         this.filename = "../Reference/Station-" + shape + ".png";
         this.image = loadImage(this.filename);
+        this.passengers = new ArrayList<Passenger>();
+        this.shape = shape;
         this.x = x;
         this.y = y;
+    }
+
+    public boolean addPassenger(Passenger passenger) {
+        if (passenger.destination.id != id) {
+            passengers.add(passenger);
+            return true;
+        }
+        return false;
     }
 
 }
