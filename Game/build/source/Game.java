@@ -111,13 +111,8 @@ class GameClass {
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
-    if (proc % 50 == 0) {
-      for (Station station : stations) {
-        if (stations.indexOf(station) == (int) random (0, stations.size())) {
-          station.addPassenger(new Passenger(stations.get((int) random(0, stations.size()))));
-        }
-      }
-    }
+    if (proc % 10 == 0)
+      stations.get((int) random (0, stations.size())).addPassenger(new Passenger(stations.get((int) random(0, stations.size()))));
     for (Station station : game.stations) {
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
@@ -135,11 +130,13 @@ class GameClass {
         //}
       }
       image(station.image, station.x, station.y);
-      for (int i = 45, j = 0; i < station.passengers.size(); i += 1, j += 15)
+      station.addPassenger(new Passenger(stations.get(0)));
+      for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
         image(station.passengers.get(i).image, station.x + j, station.y);
     }
     image(new Passenger(stations.get(0)).image, 180, 180);
   }
+
 }
 
 
@@ -153,6 +150,7 @@ class Map {
     this.filename = filename;
     this.image = loadImage(this.filename);
   }
+
 }
 
 
@@ -180,11 +178,15 @@ class Passenger {
     this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
     this.image = loadImage(filename);
   }
+
 }
 
 
 
 class Route {
+
+
+
 }
 
 
@@ -198,6 +200,7 @@ class Station {
 
   Station(int x, int y, String shape, int id) {
     this.filename = "../Reference/Station-" + shape + ".png";
+    this.id = id;
     this.image = loadImage(this.filename);
     this.passengers = new ArrayList<Passenger>();
     this.shape = shape;
@@ -212,6 +215,7 @@ class Station {
     }
     return false;
   }
+
 }
   public void settings() {  size(1920, 1080); }
   static public void main(String[] passedArgs) {
