@@ -9,10 +9,6 @@ void setup() {
 }
 
 void draw() {
-  background(0);
-  textSize(32);
-  fill(0);
-  text(game.proc + "", 90, 90);
   game.run();
   if (! paused)
     this.game.proc += 1;
@@ -20,6 +16,9 @@ void draw() {
     fill(0, 10);
     rect(0, 0, 1920, 1080);
   }
+  textSize(32);
+  fill(0);
+  text(game.proc + "", 90, 90);
 }
 
 void keyPressed() {
