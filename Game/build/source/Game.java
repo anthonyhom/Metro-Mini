@@ -111,7 +111,7 @@ class GameClass {
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
-    if (proc % 10 == 0)
+    if (proc % 100 == 0)
       stations.get((int) random (0, stations.size())).addPassenger(new Passenger(stations.get((int) random(0, stations.size()))));
     for (Station station : game.stations) {
       if (mousePress) {
@@ -119,6 +119,7 @@ class GameClass {
           mouseY > station.y - 45 && mouseY < station.y + 45) {
           PImage ripple = loadImage(station.filename);
           ripple.resize(60, 60);
+          tint(255);
           image(ripple, station.x - 7, station.y - 7);
         }
       }
@@ -130,11 +131,9 @@ class GameClass {
         //}
       }
       image(station.image, station.x, station.y);
-      station.addPassenger(new Passenger(stations.get(0)));
       for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
         image(station.passengers.get(i).image, station.x + j, station.y);
     }
-    image(new Passenger(stations.get(0)).image, 180, 180);
   }
 
 }
