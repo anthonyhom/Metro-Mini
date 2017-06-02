@@ -1,5 +1,5 @@
 GameClass game;
-boolean mouseDrag, mousePress, paused;
+boolean mouseDrag, mousePress, paused = false;
 
 void setup() {
     size(1920, 1080);
@@ -12,11 +12,15 @@ void draw() {
     background(0);
     image(game.map.image, 0, 0);
     textSize(32);
-    text(game.proc + "", 90, 90);
     fill(0);
+    text(game.proc + "", 90, 90);
+    game.run();
     if (! paused)
         this.game.proc += 1;
-    game.run();
+    else {
+        fill(0, 10);
+        rect(0, 0, 1920, 1080);
+    }
 }
 
 void keyPressed() {

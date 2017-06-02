@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Game extends PApplet {
 
 GameClass game;
-boolean mouseDrag, mousePress, paused;
+boolean mouseDrag, mousePress, paused = false;
 
 public void setup() {
     
@@ -28,11 +28,15 @@ public void draw() {
     background(0);
     image(game.map.image, 0, 0);
     textSize(32);
-    text(game.proc + "", 90, 90);
     fill(0);
+    text(game.proc + "", 90, 90);
+    game.run();
     if (! paused)
         this.game.proc += 1;
-    game.run();
+    else {
+        fill(0, 10);
+        rect(0, 0, 1920, 1080);
+    }
 }
 
 public void keyPressed() {
