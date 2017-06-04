@@ -95,6 +95,7 @@ class GameClass {
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
+<<<<<<< HEAD
     if (proc % 100 == 0)
 <<<<<<< HEAD
       stations.get((int) random (0, stations.size())).addPassenger(new Passenger(stations
@@ -102,6 +103,13 @@ class GameClass {
 =======
       stations.get((int) random (0, stations.size())).addPassenger(new Passenger(station, stations.get((int) random(0, stations.size()))));
 >>>>>>> cae1e335657584d8a3bbcc759e7ad5e686e7c40e
+=======
+    if (proc % 100 == 0) {
+      int i = (int) random(0, stations.size()), j = i;
+      while (j == 1)
+        j = (int) random(0, stations.size());
+      stations.get(i).addPassenger(new Passenger(stations.get(i), stations.get(j)));
+>>>>>>> 0f2c30b44ad1c76c064c136587b82c8d94d3cfba
     for (Station station : game.stations) {
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
