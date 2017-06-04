@@ -96,7 +96,8 @@ class GameClass {
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
     if (proc % 100 == 0)
-      stations.get((int) random (0, stations.size())).addPassenger(new Passenger(stations.get((int) random(0, stations.size()))));
+      stations.get((int) random (0, stations.size())).addPassenger(new Passenger(stations
+      ((int) random(0, stations.size()))));
     for (Station station : game.stations) {
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
@@ -167,9 +168,22 @@ class Passenger {
 
 
 class Route {
-
-
-
+  ArrayList<Route> routes = new ArrayList<Route>();
+  Map map;
+  
+  void aStar(){
+    Queue q = new Queue();
+    q.add(Passenger.current);
+    while(q.size() > 0){
+      Station p = q.next();
+      if(h.get(station.x) == map.image.get(station.x) && h.get(station.y) == map.image.get(sation.y)){
+        map.image.set(station.x, station.y, Passenger.destination);
+        while(h.get(Passenger.current - 1) != null){
+          map.image.set(station.x, station.y, h.get(Passenger,current - 1));
+        }
+      }
+    }
+  }
 }
 
 
