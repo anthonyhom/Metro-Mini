@@ -2,14 +2,20 @@ GameClass game;
 boolean mouseDrag, mousePress, paused = false;
 
 void setup() {
-  size(1920, 1080);
+  size(1600, 900);
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
+  game.run();
+  ArrayList<Station> a = new ArrayList<Station>();
+  a.add(game.stations.get(0));
+  a.add(game.stations.get(1));
+  Route r = new Route(a);
+  r.draw();
 }
 
 void draw() {
-  game.run();
+  //game.run();
   if (! paused)
     this.game.proc += 1;
   else {
@@ -180,6 +186,13 @@ class Route {
   
     Route(ArrayList<Station> stations){
      this.stations = stations;
+    }
+    
+    void draw(){
+    for(int i = 0; i < stations.size()- 1; i++){
+      strokeWeight(10);
+      line(stations.get(i).x , stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
+      }
     }
     
   /*
