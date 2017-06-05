@@ -30,7 +30,7 @@ public void draw() {
     this.game.proc += 1;
   else {
     fill(0, 10);
-    rect(0, 0, 1600, 900);
+    rect(0, 0, 1920, 1080);
   }
   textSize(32);
   fill(0);
@@ -63,6 +63,7 @@ public void mouseReleased() {
 
 class GameClass {
 
+  ArrayList<Route> routes;
   ArrayList<Station> stations;
   boolean paused;
   int numStations, proc;
@@ -109,9 +110,9 @@ class GameClass {
   public void run() {
     image(game.map.image, 0, 0);
     boolean b = false;
-    if (proc % 1 == 0 && ! b)
+    if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
-    if (proc % 1 == 0) {
+    if (proc % 500 == 0) {
       int i = (int) random(0, stations.size()), j = i;
       while (j == i)
         j = (int) random(0, stations.size());
@@ -162,6 +163,7 @@ class Passenger {
 
   int patience;
   PImage image;
+  Route route;
   String filename, shape;
   Station current, destination;
 
@@ -186,28 +188,45 @@ class Passenger {
 
 
 
-/*
-class Route {
-  ArrayList<Route> routes = new ArrayList<Route>();
-  Map map;
 
-  void aStar(){
+class Route {
+
+  ArrayList<Station> stations;
+  int Color;
+
+    Route(ArrayList<Station> stations){
+     this.stations = stations;
+    }
+
+    public void draw(){
+    for(int i = 0; i < stations.size()- 1; i++){
+      strokeWeight(10);
+      line(stations.get(i).x , stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
+      }
+    }
+
+  /*
+   ArrayList<Station> getPath(GameClass game,Station current, Station destination){
+    sequence = new Arraylist<Station>();
     ArrayList<Station> q = new ArrayList<Station>();
-    q.add(Passenger.current);
+    q.add(current);
     while(q.size() > 0){
-      Station p = q.next();
-      if(h.get(station.x) == map.image.get(station.x) && h.get(station.y) == map.image.get(sation.y)){
-        map.image.set(station.x, station.y, Passenger.destination);
-        while(h.get(Passenger.current - 1) != null){
-          map.image.set(station.x, station.y, h.get(Passenger,current - 1));
+      ArrayList<Station> temp = game.stations;
+      Station s = temp.remove(0);
+      if (s.x == destination.x && s.y == destination.y){
+        q.add(s);
+        while(s.get(current - 1) != null){
+          destination.set(station.x, station.y, s.get(Passenger,current - 1));
+          s = s.get(Passenger.current - 1);
         }
+
       }
     }
   }
+  */
 }
-*/
 
-
+class Path {}
 
 class Station {
 

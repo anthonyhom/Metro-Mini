@@ -2,25 +2,19 @@ GameClass game;
 boolean mouseDrag, mousePress, paused = false;
 
 void setup() {
-  size(1600, 900);
+  size(1920, 1080);
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
-  game.run();
-  ArrayList<Station> a = new ArrayList<Station>();
-  a.add(game.stations.get(0));
-  a.add(game.stations.get(1));
-  Route r = new Route(a);
-  r.draw();
 }
 
 void draw() {
-  //game.run();
+  game.run();
   if (! paused)
     this.game.proc += 1;
   else {
     fill(0, 10);
-    rect(0, 0, 1600, 900);
+    rect(0, 0, 1920, 1080);
   }
   textSize(32);
   fill(0);
@@ -180,21 +174,21 @@ class Passenger {
 
 
 class Route {
-  
+
   ArrayList<Station> stations;
   int Color;
-  
+
     Route(ArrayList<Station> stations){
      this.stations = stations;
     }
-    
+
     void draw(){
     for(int i = 0; i < stations.size()- 1; i++){
       strokeWeight(10);
       line(stations.get(i).x , stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
       }
     }
-    
+
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){
     sequence = new Arraylist<Station>();
@@ -209,7 +203,7 @@ class Route {
           destination.set(station.x, station.y, s.get(Passenger,current - 1));
           s = s.get(Passenger.current - 1);
         }
-        
+
       }
     }
   }
