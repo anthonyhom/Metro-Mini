@@ -95,11 +95,10 @@ class GameClass {
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
-    if (proc % 1 == 0) {
+    if (proc % 500 == 0) {
       int i = (int) random(0, stations.size()), j = i;
       while (j == i)
         j = (int) random(0, stations.size());
-      System.out.println(i + " : " + j);
       stations.get(i).addPassenger(new Passenger(stations.get(i), stations.get(j)));
     }
     for (Station station : game.stations) {
