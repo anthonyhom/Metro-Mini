@@ -2,7 +2,7 @@ GameClass game;
 boolean mouseDrag, mousePress, paused = false;
 
 void setup() {
-  size(1600, 900);
+  size(1920, 1080);
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
@@ -93,9 +93,9 @@ class GameClass {
   void run() {
     image(game.map.image, 0, 0);
     boolean b = false;
-    if (proc % 1000 == 0 && ! b)
+    if (proc % 1 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
-    if (proc % 500 == 0) {
+    if (proc % 1 == 0) {
       int i = (int) random(0, stations.size()), j = i;
       while (j == i)
         j = (int) random(0, stations.size());

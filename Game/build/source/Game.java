@@ -109,9 +109,9 @@ class GameClass {
   public void run() {
     image(game.map.image, 0, 0);
     boolean b = false;
-    if (proc % 1000 == 0 && ! b)
+    if (proc % 1 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
-    if (proc % 500 == 0) {
+    if (proc % 1 == 0) {
       int i = (int) random(0, stations.size()), j = i;
       while (j == i)
         j = (int) random(0, stations.size());
@@ -235,7 +235,7 @@ class Station {
   }
 
 }
-  public void settings() {  size(1600, 900); }
+  public void settings() {  size(1920, 1080); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "Game" };
     if (passedArgs != null) {
