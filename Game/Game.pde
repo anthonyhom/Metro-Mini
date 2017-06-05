@@ -14,7 +14,7 @@ void draw() {
     this.game.proc += 1;
   else {
     fill(0, 10);
-    rect(0, 0, 1600, 900);
+    rect(0, 0, 1920, 1080);
   }
   textSize(32);
   fill(0);
