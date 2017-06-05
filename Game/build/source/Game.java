@@ -30,7 +30,7 @@ public void draw() {
     this.game.proc += 1;
   else {
     fill(0, 10);
-    rect(0, 0, 1920, 1080);
+    rect(0, 0, 1600, 900);
   }
   textSize(32);
   fill(0);
@@ -185,11 +185,13 @@ class Passenger {
 }
 
 
+
+/*
 class Route {
   ArrayList<Route> routes = new ArrayList<Route>();
   Map map;
 
-  public void aStar(){
+  void aStar(){
     ArrayList<Station> q = new ArrayList<Station>();
     q.add(Passenger.current);
     while(q.size() > 0){
@@ -203,6 +205,7 @@ class Route {
     }
   }
 }
+*/
 
 
 
@@ -232,7 +235,7 @@ class Station {
   }
 
 }
-  public void settings() {  size(1920, 1080); }
+  public void settings() {  size(1600, 900); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "Game" };
     if (passedArgs != null) {

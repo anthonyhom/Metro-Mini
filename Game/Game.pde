@@ -2,7 +2,7 @@ GameClass game;
 boolean mouseDrag, mousePress, paused = false;
 
 void setup() {
-  size(1920, 1080);
+  size(1600, 900);
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
@@ -14,7 +14,7 @@ void draw() {
     this.game.proc += 1;
   else {
     fill(0, 10);
-    rect(0, 0, 1920, 1080);
+    rect(0, 0, 1600, 900);
   }
   textSize(32);
   fill(0);
@@ -169,6 +169,8 @@ class Passenger {
 }
 
 
+
+/*
 class Route {
   ArrayList<Route> routes = new ArrayList<Route>();
   Map map;
@@ -187,6 +189,7 @@ class Route {
     }
   }
 }
+*/
 
 
 
