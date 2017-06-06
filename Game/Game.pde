@@ -173,6 +173,11 @@ class Metro {
   ArrayList<Metro> cars;
   boolean reverse;
   ArrayList<Passenger> passengers;
+  Route route;
+  
+  Metro(Route route) {
+    this.route = route;
+  }
   
 }
 
