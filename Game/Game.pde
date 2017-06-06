@@ -211,7 +211,22 @@ class Route {
     this.Color = Color;
     this.stations = stations;
   }
-
+  
+  //psuedo code for better understanding how the route class should work based on diagram
+  //we should also try to find a way to link passengers with routes to keep track of position
+  /*
+  isRoute(){
+    for(int i = 0; i < stations.size() - 1; i+= 1){ //traverse through the stations to check for the same id
+      if (passenger.current.id != station.get(i).id){ //if the current id doesn't match with the id of the station move to next station
+        passenger.(current + 1).id;
+      }
+      if (passenger.destination.id == id){ //once reached to the same shaped station, go back to the following route and put all the stations followed into arraylist
+        stations.add(passenger.(current - 1).id;
+      }
+    }
+  }
+  */
+  
   void draw() {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
