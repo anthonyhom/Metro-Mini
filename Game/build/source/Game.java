@@ -65,6 +65,9 @@ public void mouseReleased() {
   mouseDrag = false;
   mousePress = false;
   mouseRelease = true;
+  game.addRoute(a, (int) random(0, 256));
+  a.clear();
+  System.out.println(game.routes.size());
 }
 
 
@@ -107,6 +110,8 @@ class GameClass {
   }
 
   public void addRoute(ArrayList<Station> stations, int Color) {
+    if (stations.size() <= 1)
+      return;
     Route route = new Route(stations, Color);
     routes.add(route);
   }
@@ -144,17 +149,15 @@ class GameClass {
           image(ripple, station.x - 7, station.y - 7);
         }
       }
-      if (station.selected) a.add(station);
+      if (station.selected && a.indexOf(station) == -1) a.add(station);
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
             mouseY > station.y - 45 && mouseY < station.y + 45) {
           station.selected = true;
         }
       }
-      if (mouseRelease) {
-        addRoute(a, (int) random(0, 256));
+      if (mouseRelease)
         station.selected = false;
-      }
       image(station.image, station.x, station.y);
       for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
         station.passengers.get(i).draw(station.x + j, station.y);
