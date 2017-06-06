@@ -99,7 +99,7 @@ class GameClass {
   }
 
   void run() {
-    game.map.draw();
+    game.map.draw(0, 0);
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
@@ -128,7 +128,7 @@ class GameClass {
       }
       image(station.image, station.x, station.y);
       for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
-        image(station.passengers.get(i).image, station.x + j, station.y);
+        station.passengers.get(i).draw(station.x + j, station.y);
     }
   }
 
@@ -146,8 +146,8 @@ class Map {
     this.image = loadImage(this.filename);
   }
 
-  void draw() {
-    image(image, 0, 0);
+  void draw(int x, int y) {
+    image(image, x, y);
   }
 
 }
@@ -177,6 +177,10 @@ class Passenger {
     this.destination = destination;
     this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
     this.image = loadImage(filename);
+  }
+
+  void draw(int x, int y) {
+    image(image, x, y);
   }
 
 }
