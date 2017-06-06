@@ -173,11 +173,16 @@ class Metro {
   ArrayList<Metro> cars;
   boolean reverse;
   ArrayList<Passenger> passengers;
+  PImage image;
   Route route;
   
   Metro(Route route) {
     this.passengers = new ArrayList<Passenger>(6);
     this.route = route;
+  }
+  
+  void draw() {
+    
   }
   
 }
