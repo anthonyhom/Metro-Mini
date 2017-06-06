@@ -176,6 +176,7 @@ class Metro {
   Route route;
   
   Metro(Route route) {
+    this.passengers = new ArrayList<Passenger>(6);
     this.route = route;
   }
   
