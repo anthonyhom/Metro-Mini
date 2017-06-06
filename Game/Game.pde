@@ -1,7 +1,8 @@
 import java.util.*;
 
 GameClass game;
-boolean mouseDrag, mousePress, paused = false;
+boolean mouseDrag, mousePress, mouseRelease, paused = false;
+ArrayList<Station> a = new ArrayList<Station>();
 
 void setup() {
   size(1920, 1080);
@@ -34,15 +35,18 @@ void keyPressed() {
 
 void mouseDragged() {
   mouseDrag = true;
+  mouseRelease = false;
 }
 
 void mousePressed() {
   mousePress = true;
+  mouseRelease = false;
 }
 
 void mouseReleased() {
   mouseDrag = false;
   mousePress = false;
+  mouseRelease = true;
 }
 
 
@@ -101,15 +105,8 @@ class GameClass {
 
   void run() {
     game.map.draw(0, 0);
-    if (proc % 2000 == 0) {
-      ArrayList<Station> a = new ArrayList<Station>();
-      for (Station station : stations) a.add(station);
-      addRoute(a, (int) random(0, 256));
-    }
-    if (routes.size() > 0) {
     for (Route route : routes)
       route.draw();
-  }
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
@@ -129,12 +126,16 @@ class GameClass {
           image(ripple, station.x - 7, station.y - 7);
         }
       }
-      if (mouseDrag) {
-        //if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
-        //    mouseY > station.y - 45 && mouseY < station.y + 45) {
-        stroke(0);
-        line(mouseX, mouseY, station.x + 22, station.y + 22);
-        //}
+      if (station.selected) a.add(station);
+      if (mousePress) {
+        if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
+            mouseY > station.y - 45 && mouseY < station.y + 45) {
+          station.selected = true;
+        }
+      }
+      if (mouseRelease) {
+        addRoute(a, (int) random(0, 256));
+        station.selected = false;
       }
       image(station.image, station.x, station.y);
       for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
@@ -212,7 +213,7 @@ class Route {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
-      line(stations.get(i).x , stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
+      line(stations.get(i).x + 22, stations.get(i).y + 22, stations.get(i + 1).x + 22, stations.get(i + 1).y + 22);
     }
   }
 
@@ -242,6 +243,7 @@ class Path {}
 class Station {
 
   ArrayList<Passenger> passengers;
+  boolean selected;
   int x, y, id;
   PImage image;
   String filename, shape;
@@ -251,6 +253,7 @@ class Station {
     this.id = id;
     this.image = loadImage(this.filename);
     this.passengers = new ArrayList<Passenger>();
+    this.selected = false;
     this.shape = shape;
     this.x = x;
     this.y = y;
