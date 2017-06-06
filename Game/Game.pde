@@ -168,6 +168,16 @@ class Map {
 
 
 
+class Metro {
+  
+  ArrayList<Metro> cars;
+  boolean reverse;
+  ArrayList<Passenger> passengers;
+  
+}
+
+
+
 class Passenger {
 
   int patience;
