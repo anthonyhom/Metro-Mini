@@ -92,6 +92,7 @@ class GameClass {
     this.numStations = 0;
     this.paused = false;
     this.proc = 0;
+    this.routes = new ArrayList<Route>();
     this.stations = new ArrayList<Station>();
     int i = 1;
     while (i > 0) {
@@ -118,6 +119,15 @@ class GameClass {
 
   public void run() {
     game.map.draw(0, 0);
+    if (proc % 2000 == 0) {
+      ArrayList<Station> a = new ArrayList<Station>();
+      for (Station station : stations) a.add(station);
+      addRoute(a, (int) random(0, 256));
+    }
+    if (routes.size() > 0) {
+    for (Route route : routes)
+      route.draw();
+  }
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
