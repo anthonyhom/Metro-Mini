@@ -1,3 +1,5 @@
+import java.util.*;
+
 GameClass game;
 boolean mouseDrag, mousePress, paused = false;
 
@@ -81,6 +83,11 @@ class GameClass {
     }
   }
 
+  void addRoute(ArrayList<Station> stations, int Color) {
+    Route route = new Route(stations, Color);
+    routes.add(route);
+  }
+
   boolean addStation(Station station) {
     if (map.image.get(station.x, station.y) == color(224)) {
       stations.add(station);
@@ -92,7 +99,7 @@ class GameClass {
   }
 
   void run() {
-    image(game.map.image, 0, 0);
+    game.map.draw();
     boolean b = false;
     if (proc % 1000 == 0 && ! b)
       b = addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations));
@@ -139,6 +146,10 @@ class Map {
     this.image = loadImage(this.filename);
   }
 
+  void draw() {
+    image(image, 0, 0);
+  }
+
 }
 
 
@@ -178,16 +189,18 @@ class Route {
   ArrayList<Station> stations;
   int Color;
 
-    Route(ArrayList<Station> stations){
-     this.stations = stations;
-    }
+  Route(ArrayList<Station> stations, int Color) {
+    this.Color = Color;
+    this.stations = stations;
+  }
 
-    void draw(){
-    for(int i = 0; i < stations.size()- 1; i++){
+  void draw() {
+    for (int i = 0; i < stations.size() - 1; i += 1) {
+      stroke(Color);
       strokeWeight(10);
       line(stations.get(i).x , stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
-      }
     }
+  }
 
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){
