@@ -172,7 +172,7 @@ class Passenger {
 
   int patience;
   PImage image;
-  Route route;
+  Route path;
   String filename, shape;
   Station current, destination;
 
@@ -191,6 +191,21 @@ class Passenger {
     this.destination = destination;
     this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
     this.image = loadImage(filename);
+  }
+  
+  void findPath() {
+    ArrayList<Station> a = new ArrayList<Station>();
+    Stack<Station> stack = new Stack();
+    Station temp = current;
+    stack.add(temp);
+    while (stack.size() > 0) {
+      temp = stack.pop();
+      if (station.id == destination.id) {
+        a.add(station);
+        return;
+      }
+    }
+   
   }
 
   void draw(int x, int y) {
