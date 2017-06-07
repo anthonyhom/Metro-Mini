@@ -27,10 +27,17 @@ public void setup() {
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
+  game.run();
+  ArrayList<Station> a = new ArrayList<Station>();
+  a.add(game.stations.get(0));
+  a.add(game.stations.get(1));
+  game.addRoute(a, 0);
+  Metro m = new Metro(game.routes.get(0));
+  m.draw();
 }
 
 public void draw() {
-  game.run();
+  //game.run();
   if (! paused)
     this.game.proc += 1;
   else {
@@ -38,7 +45,6 @@ public void draw() {
     rect(0, 0, 1920, 1080);
   }
   textSize(32);
-  fill(0);
   text(game.proc + "", 90, 90);
 }
 
@@ -190,14 +196,18 @@ class Metro {
 
   ArrayList<Metro> cars;
   ArrayList<Passenger> passengers;
-  boolean reverse;
-  int x, y;
+  boolean selected;
+  int direction, x, y;
   PImage image;
   Route route;
 
   Metro(Route route) {
+    this.direction = 1;
     this.passengers = new ArrayList<Passenger>(6);
     this.route = route;
+    this.selected = false;
+    this.x = route.stations.get(0).x;
+    this.y = route.stations.get(0).y;
   }
 
   public void addPassenger(Passenger passenger) {
@@ -211,7 +221,7 @@ class Metro {
 
   public void draw() {
     fill(route.Color);
-    rect(x, y, x + 90, y + 45);
+    rect(x, y, x + 45, y + 22);
     for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
       passengers.get(i).draw(x + j, y);
     for (int k = 3, l = 0; k < 6 && k < passengers.size(); k += 1, l += 15)
