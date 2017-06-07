@@ -9,17 +9,10 @@ void setup() {
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
-  game.run();
-  ArrayList<Station> a = new ArrayList<Station>();
-  a.add(game.stations.get(0));
-  a.add(game.stations.get(1));
-  game.addRoute(a, 0);
-  Metro m = new Metro(game.routes.get(0));
-  m.draw();
 }
 
 void draw() {
-  //game.run();
+  game.run();
   if (! paused)
     this.game.proc += 1;
   else {
@@ -55,7 +48,6 @@ void mouseReleased() {
   mouseRelease = true;
   game.addRoute(a, (int) random(0, 256));
   a.clear();
-  System.out.println(game.routes.size());
 }
 
 
@@ -101,6 +93,7 @@ class GameClass {
     if (stations.size() <= 1)
       return;
     Route route = new Route(stations, Color);
+    route.metros.add(new Metro(route));
     routes.add(route);
   }
 
@@ -127,7 +120,12 @@ class GameClass {
         j = (int) random(0, stations.size());
       stations.get(i).addPassenger(new Passenger(stations.get(i), stations.get(j)));
     }
-    for (Station station : game.stations) {
+    for (Route route : routes) {
+      for (Metro metro : route.metros) {
+          metro.draw();
+      }
+    }
+    for (Station station : stations) {
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
           mouseY > station.y - 45 && mouseY < station.y + 45) {
@@ -203,7 +201,7 @@ class Metro {
 
   void draw() {
     fill(route.Color);
-    rect(x, y, x + 45, y + 22);
+    rect(x, y, 90, 45);
     for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
       passengers.get(i).draw(x + j, y);
     for (int k = 3, l = 0; k < 6 && k < passengers.size(); k += 1, l += 15)
@@ -267,10 +265,12 @@ class Passenger {
 class Route {
 
   ArrayList<Station> stations;
+  ArrayList<Metro> metros;
   int Color;
 
   Route(ArrayList<Station> stations, int Color) {
     this.Color = Color;
+    this.metros = new ArrayList<Metro>();
     this.stations = stations;
   }
 
