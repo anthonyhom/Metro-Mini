@@ -170,7 +170,7 @@ class Map {
 
 class Metro {
   
-  ArrayList<Metro> cars;
+  ArrayList<Object> cars;
   boolean reverse;
   ArrayList<Passenger> passengers;
   PImage image;
@@ -182,12 +182,12 @@ class Metro {
   }
   
   void add(){
-     ArrayList<Metro> temp = new ArrayList<Metro>();
-     if (cars.size() < passengers.size()){
-     for (int i = 0; i < passengers.size() - cars.size(); i += 1){
-       temp.add(i,(Metro)passengers.get(i));
+     ArrayList<Object> temp = new ArrayList<Object>(); // set up temporary arraylist
+     if (cars.size() != passengers.size()){ //if the car still has space...
+     for (int i = 0; i < passengers.size() - cars.size(); i += 1){ // add passengers to remaining space
+       temp.add(i, passengers.get(i)); 
        }
-       cars = new ArrayList<Metro>(temp);
+       cars = new ArrayList<Object>(temp);
      }
   }
   
@@ -224,6 +224,7 @@ class Passenger {
     this.image = loadImage(filename);
   }
   
+  /* ===============================================
   void findPath() {
     ArrayList<Station> a = new ArrayList<Station>();
     Stack<Station> stack = new Stack();
@@ -236,9 +237,8 @@ class Passenger {
         return;
       }
     }
-   
   }
-
+  */ ==============================================
   void draw(int x, int y) {
     image(image, x, y);
   }
