@@ -169,32 +169,37 @@ class Map {
 
 
 class Metro {
-  
-  ArrayList<Object> cars;
-  boolean reverse;
+
+  ArrayList<Metro> cars;
   ArrayList<Passenger> passengers;
+  boolean reverse;
+  int x, y;
   PImage image;
   Route route;
-  
+
   Metro(Route route) {
     this.passengers = new ArrayList<Passenger>(6);
     this.route = route;
   }
-  
-  void add(){
-     ArrayList<Object> temp = new ArrayList<Object>(); // set up temporary arraylist
-     if (cars.size() != passengers.size()){ //if the car still has space...
-     for (int i = 0; i < passengers.size() - cars.size(); i += 1){ // add passengers to remaining space
-       temp.add(i, passengers.get(i)); 
-       }
-       cars = new ArrayList<Object>(temp);
-     }
-  }
-  
+
+  void addPassenger(Passenger passenger) {
+     /*
+     ArrayList<Metro> temp = new ArrayList<Metro>(); // set up temporary arraylist
+     if (cars.size() != passengers.size()) { //if the car still has space...
+     for (int i = 0; i < passengers.size() - cars.size(); i += 1) // add passengers to remaining space
+       temp.add(i, passengers.get(i));
+     */
+ }
+
   void draw() {
-    
+    fill(route.Color);
+    rect(x, y, x + 90, y + 45);
+    for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
+      passengers.get(i).draw(x + j, y);
+    for (int k = 3, l = 0; k < 6 && k < passengers.size(); k += 1, l += 15)
+      passengers.get(k).draw(x + l, y);
   }
-  
+
 }
 
 
@@ -223,7 +228,7 @@ class Passenger {
     this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
     this.image = loadImage(filename);
   }
-  
+
   /*
   void findPath() {
     ArrayList<Station> a = new ArrayList<Station>();
@@ -239,7 +244,7 @@ class Passenger {
     }
   }
   */
-  
+
   void draw(int x, int y) {
     image(image, x, y);
   }
@@ -258,7 +263,7 @@ class Route {
     this.Color = Color;
     this.stations = stations;
   }
-  
+
   //psuedo code for better understanding how the route class should work based on diagram
   //we should also try to find a way to link passengers with routes to keep track of position
   /*
@@ -273,7 +278,7 @@ class Route {
     }
   }
   */
-  
+
   void draw() {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
