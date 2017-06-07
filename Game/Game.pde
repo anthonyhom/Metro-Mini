@@ -224,7 +224,7 @@ class Passenger {
     this.image = loadImage(filename);
   }
   
-  /* ===============================================
+  /*
   void findPath() {
     ArrayList<Station> a = new ArrayList<Station>();
     Stack<Station> stack = new Stack();
@@ -232,13 +232,14 @@ class Passenger {
     stack.add(temp);
     while (stack.size() > 0) {
       temp = stack.pop();
-      if (station.id == destination.id) {
-        a.add(station);
+      if (temp.id == destination.id) {
+        a.add(temp);
         return;
       }
     }
   }
-  */ ==============================================
+  */
+  
   void draw(int x, int y) {
     image(image, x, y);
   }
