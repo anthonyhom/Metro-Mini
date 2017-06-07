@@ -181,6 +181,16 @@ class Metro {
     this.route = route;
   }
   
+  void add(){
+     ArrayList<Metro> temp = new ArrayList<Metro>();
+     if (cars.size() < passengers.size()){
+     for (int i = 0; i < passengers.size() - cars.size(); i += 1){
+       temp.add(i,(Metro)passengers.get(i));
+       }
+       cars = new ArrayList<Metro>(temp);
+     }
+  }
+  
   void draw() {
     
   }
