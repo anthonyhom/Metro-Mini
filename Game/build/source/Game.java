@@ -37,6 +37,7 @@ public void draw() {
     fill(0, 10);
     rect(0, 0, 1920, 1080);
   }
+  fill(0);
   textSize(32);
   text(game.proc + "", 90, 90);
 }
@@ -143,7 +144,7 @@ class GameClass {
   }
 
   public void run() {
-    game.map.draw(0, 0);
+    game.map.draw(width / 2, height / 2);
     for (Route route : routes)
       route.draw();
     boolean b = false;
@@ -167,7 +168,8 @@ class GameClass {
           PImage ripple = loadImage(station.filename);
           ripple.resize(60, 60);
           tint(255);
-          image(ripple, station.x - 7, station.y - 7);
+          imageMode(CENTER);
+          image(ripple, station.x, station.y);
         }
       }
       if (station.selected && a.indexOf(station) == -1) a.add(station);
@@ -179,7 +181,7 @@ class GameClass {
       }
       if (mouseRelease)
         station.selected = false;
-      image(station.image, station.x, station.y);
+      station.draw();
       for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
         station.passengers.get(i).draw(station.x + j, station.y);
     }
@@ -200,7 +202,7 @@ class Map {
   }
 
   public void draw(int x, int y) {
-    imageMode(CORNERS);
+    imageMode(CENTER);
     image(image, x, y);
   }
 
@@ -237,9 +239,8 @@ class Metro {
 
   public void draw() {
     fill(route.Color);
-    stroke(0);
-    strokeWeight(2);
-    rect(x, y, 90, 45);
+    rectMode(CENTER);
+    rect(x, y, 45, 22);
     for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
       passengers.get(i).draw(x + j, y);
     for (int k = 3, l = 0; k < 6 && k < passengers.size(); k += 1, l += 15)
@@ -292,6 +293,7 @@ class Passenger {
   */
 
   public void draw(int x, int y) {
+    imageMode(CENTER);
     image(image, x, y);
   }
 
@@ -331,7 +333,7 @@ class Route {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
-      line(stations.get(i).x + 22, stations.get(i).y + 22, stations.get(i + 1).x + 22, stations.get(i + 1).y + 22);
+      line(stations.get(i).x, stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
     }
   }
 
@@ -383,6 +385,11 @@ class Station {
       return true;
     }
     return false;
+  }
+
+  public void draw() {
+      imageMode(CENTER);
+      image(image, x, y);
   }
 
 }
