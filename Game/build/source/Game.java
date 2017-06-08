@@ -64,7 +64,7 @@ public void mouseReleased() {
   mouseDrag = false;
   mousePress = false;
   mouseRelease = true;
-  game.addRoute(a, (int) random(0, 256));
+  game.addRoute(a, game.colors.remove(0));
   a.clear();
 }
 
@@ -72,14 +72,23 @@ public void mouseReleased() {
 
 class GameClass {
 
+  ArrayList<Integer> colors;
   ArrayList<Route> routes;
   ArrayList<Station> stations;
   boolean paused;
-  int numStations, proc;
+  int numColors, numStations, proc;
   Map map;
   String[] shapes = new String[] {"Circle", "Square", "Triangle"};
 
   GameClass() {
+    this.colors = new ArrayList<Integer>();
+    colors.add(color(236, 52, 46));
+    colors.add(color(0, 145, 60));
+    colors.add(color(184, 51, 172));
+    colors.add(color(40, 80, 172));
+    colors.add(color(253, 99, 25));
+    colors.add(color(250, 202, 10));
+    colors.add(color(152, 101, 52));
     this.numStations = 0;
     this.paused = false;
     this.proc = 0;
@@ -93,6 +102,14 @@ class GameClass {
   }
 
   GameClass(Map map) {
+    this.colors = new ArrayList<Integer>();
+    colors.add(color(236, 52, 46));
+    colors.add(color(0, 145, 60));
+    colors.add(color(184, 51, 172));
+    colors.add(color(40, 80, 172));
+    colors.add(color(253, 99, 25));
+    colors.add(color(250, 202, 10));
+    colors.add(color(152, 101, 52));
     this.map = map;
     this.numStations = 0;
     this.paused = false;
@@ -183,6 +200,7 @@ class Map {
   }
 
   public void draw(int x, int y) {
+    imageMode(CORNERS);
     image(image, x, y);
   }
 
@@ -219,6 +237,8 @@ class Metro {
 
   public void draw() {
     fill(route.Color);
+    stroke(0);
+    strokeWeight(2);
     rect(x, y, 90, 45);
     for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
       passengers.get(i).draw(x + j, y);
