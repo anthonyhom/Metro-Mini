@@ -177,7 +177,8 @@ class GameClass {
           image(ripple, station.x, station.y);
         }
       }
-      if (station.selected && a.indexOf(station) == -1) a.add(station);
+      if (station.selected && a.indexOf(station) == -1)
+        a.add(station);
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
             mouseY > station.y - 45 && mouseY < station.y + 45) {
@@ -237,13 +238,10 @@ class Metro {
     this.y = route.stations.get(0).y;
   }
 
-  public void addPassenger(Passenger passenger) {
-     /*
-     ArrayList<Metro> temp = new ArrayList<Metro>(); // set up temporary arraylist
-     if (cars.size() != passengers.size()) { //if the car still has space...
-     for (int i = 0; i < passengers.size() - cars.size(); i += 1) // add passengers to remaining space
-       temp.add(i, passengers.get(i));
-     */
+  public void load() {
+    while (x == next.x && y == next.y && next.passengers.size() > 0) {
+      passengers.add(next.passengers.remove(0));
+    }
  }
 
  public Station getNext() {
@@ -251,11 +249,15 @@ class Metro {
        route.stations.indexOf(next) == route.stations.size() - 1);
      direction *= -1;
    timer = 100;
+   try {
    next = route.stations.get(route.stations.indexOf(next) + direction);
+   }
+   catch (ArrayIndexOutOfBoundsException e) { };
    return next;
  }
 
  public void move() {
+   load();
    if (x == next.x && y == next.y)
      getNext();
    if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
