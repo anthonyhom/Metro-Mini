@@ -158,7 +158,8 @@ class GameClass {
     }
     for (Route route : routes) {
       for (Metro metro : route.metros) {
-          metro.draw();
+        metro.move();
+        metro.draw();
       }
     }
     for (Station station : stations) {
@@ -215,15 +216,18 @@ class Metro {
   ArrayList<Metro> cars;
   ArrayList<Passenger> passengers;
   boolean selected;
-  int direction, x, y;
+  int direction, timer, x, y;
   PImage image;
   Route route;
+  Station next;
 
   Metro(Route route) {
     this.direction = 1;
+    this.next = route.stations.get(1);
     this.passengers = new ArrayList<Passenger>(6);
     this.route = route;
     this.selected = false;
+    this.timer = 100;
     this.x = route.stations.get(0).x;
     this.y = route.stations.get(0).y;
   }
@@ -235,6 +239,29 @@ class Metro {
      for (int i = 0; i < passengers.size() - cars.size(); i += 1) // add passengers to remaining space
        temp.add(i, passengers.get(i));
      */
+ }
+
+ public Station getNext() {
+   if (route.stations.indexOf(next) == 0 ||
+       route.stations.indexOf(next) == route.stations.size() - 1)
+     direction *= -1;
+   timer = 100;
+   next = route.stations.get(route.stations.indexOf(next) + direction);
+   return next;
+ }
+
+ public void move() {
+   if (x == next.x && y == next.y && timer < 0)
+     next = getNext();
+   if (abs((x - 1) - next.x) < abs(x - next.x) && timer <= 0)
+     x -= 1;
+   if (abs((x + 1) - next.x) < abs(x - next.x) && timer <= 0)
+     x += 1;
+   if (abs((y - 1) - next.y) < abs(y - next.y) && timer <= 0)
+     y -= 1;
+   if (abs((y + 1) - next.y) < abs(y - next.y) && timer <= 0)
+     y += 1;
+   timer -= 1;
  }
 
   public void draw() {
