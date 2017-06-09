@@ -80,6 +80,7 @@ class GameClass {
     while (i > 0) {
       if (addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations))) {
         i -= 1;
+
       }
     }
   }
