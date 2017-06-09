@@ -216,7 +216,7 @@ class Metro {
   ArrayList<Metro> cars;
   ArrayList<Passenger> passengers;
   boolean selected;
-  int direction, timer, x, y;
+  int direction, speed, timer, x, y;
   PImage image;
   Route route;
   Station next;
@@ -227,6 +227,7 @@ class Metro {
     this.passengers = new ArrayList<Passenger>(6);
     this.route = route;
     this.selected = false;
+    this.speed = 3;
     this.timer = 100;
     this.x = route.stations.get(0).x;
     this.y = route.stations.get(0).y;
@@ -242,8 +243,9 @@ class Metro {
  }
 
  public Station getNext() {
-   if (route.stations.indexOf(next) == 0 ||
-       route.stations.indexOf(next) == route.stations.size() - 1)
+   if ((route.stations.indexOf(next) == 0 ||
+        route.stations.indexOf(next) == route.stations.size() - 1) &&
+        timer < 0)
      direction *= -1;
    timer = 100;
    next = route.stations.get(route.stations.indexOf(next) + direction);
@@ -251,16 +253,18 @@ class Metro {
  }
 
  public void move() {
-   if (x == next.x && y == next.y && timer < 0)
+   if (x == next.x && y == next.y && timer < 0) {
+
      next = getNext();
-   if (abs((x - 1) - next.x) < abs(x - next.x) && timer <= 0)
-     x -= 1;
-   if (abs((x + 1) - next.x) < abs(x - next.x) && timer <= 0)
-     x += 1;
-   if (abs((y - 1) - next.y) < abs(y - next.y) && timer <= 0)
-     y -= 1;
-   if (abs((y + 1) - next.y) < abs(y - next.y) && timer <= 0)
-     y += 1;
+   }
+   if (abs((x - speed) - next.x) < abs(x - next.x) && timer <= 0)
+     x -= speed;
+   if (abs((x + speed) - next.x) < abs(x - next.x) && timer <= 0)
+     x += speed;
+   if (abs((y - speed) - next.y) < abs(y - next.y) && timer <= 0)
+     y -= speed;
+   if (abs((y + speed) - next.y) < abs(y - next.y) && timer <= 0)
+     y += speed;
    timer -= 1;
  }
 
