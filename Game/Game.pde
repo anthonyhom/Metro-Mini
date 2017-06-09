@@ -229,9 +229,8 @@ class Metro {
  }
 
  Station getNext() {
-   if ((route.stations.indexOf(next) == 0 ||
-        route.stations.indexOf(next) == route.stations.size() - 1) &&
-        timer < 0)
+   if (route.stations.indexOf(next) == 0 ||
+       route.stations.indexOf(next) == route.stations.size() - 1);
      direction *= -1;
    timer = 100;
    next = route.stations.get(route.stations.indexOf(next) + direction);
@@ -239,17 +238,15 @@ class Metro {
  }
 
  void move() {
-   if (x == next.x && y == next.y && timer < 0) {
-
-     next = getNext();
-   }
-   if (abs((x - speed) - next.x) < abs(x - next.x) && timer <= 0)
+   if (x == next.x && y == next.y)
+     getNext();
+   if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
      x -= speed;
-   if (abs((x + speed) - next.x) < abs(x - next.x) && timer <= 0)
+   if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
      x += speed;
-   if (abs((y - speed) - next.y) < abs(y - next.y) && timer <= 0)
+   if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
      y -= speed;
-   if (abs((y + speed) - next.y) < abs(y - next.y) && timer <= 0)
+   if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
      y += speed;
    timer -= 1;
  }
@@ -257,7 +254,7 @@ class Metro {
   void draw() {
     fill(route.Color);
     rectMode(CENTER);
-    rect(x, y, 45, 30);
+    rect(x, y, 60, 30);
     for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
       passengers.get(i).draw(x + j, y);
     for (int k = 3, l = 0; k < 6 && k < passengers.size(); k += 1, l += 15)
