@@ -232,7 +232,7 @@ class Metro {
     this.route = route;
     this.selected = false;
     this.speed = 3;
-    this.timer = 100;
+    this.timer = -1;
     this.x = route.stations.get(0).x;
     this.y = route.stations.get(0).y;
   }
@@ -275,11 +275,14 @@ class Metro {
   public void draw() {
     fill(route.Color);
     rectMode(CENTER);
-    rect(x, y, 45, 22);
+    rect(x, y, 45, 30);
     for (int i = 0, j = 0; i < 3 && i < passengers.size(); i += 1, j += 15)
       passengers.get(i).draw(x + j, y);
     for (int k = 3, l = 0; k < 6 && k < passengers.size(); k += 1, l += 15)
       passengers.get(k).draw(x + l, y);
+    fill(0);
+    textMode(CENTER);
+    text(route.stations.indexOf(next), x, y);
   }
 
 }
