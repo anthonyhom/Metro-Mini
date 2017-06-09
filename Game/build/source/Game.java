@@ -21,12 +21,14 @@ public class Game extends PApplet {
 GameClass game;
 boolean mouseDrag, mousePress, mouseRelease, paused = false;
 ArrayList<Station> a = new ArrayList<Station>();
+int counter;
 
 public void setup() {
   
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
+  counter = 0;
 }
 
 public void draw() {
@@ -40,6 +42,7 @@ public void draw() {
   fill(0);
   textSize(32);
   text(game.proc + "", 90, 90);
+  text(counter + "", width - 90, 90);
 }
 
 public void keyPressed() {
@@ -246,9 +249,10 @@ class Metro {
 
   public void unload() {
     int i = 0;
-    while (x == next.x && y == next.y && i < 6) {
+    while (x == next.x && y == next.y && i < passengers.size()) {
       if (passengers.get(i).destination.id == next.id) {
         passengers.remove(i);
+        counter += 1;
       }
       else
         i += 1;
@@ -268,7 +272,7 @@ class Metro {
   }
 
   public void move() {
-      //unload();
+      unload();
       load();
       if (x == next.x && y == next.y)
       getNext();
@@ -288,9 +292,9 @@ class Metro {
     rectMode(CENTER);
     rect(x, y, 60, 30);
     for (int i = 0, j = -24; i < 3 && i < passengers.size(); i += 1, j += 24)
-    passengers.get(i).draw(x + j, y - 12);
+    passengers.get(i).draw(x + j, y - 6);
     for (int k = 3, l = -24; k < 6 && k < passengers.size(); k += 1, l += 24)
-    passengers.get(k).draw(x + l, y + 24);
+    passengers.get(k).draw(x + l, y + 18);
     fill(0);
     textMode(CENTER);
     text(route.stations.indexOf(next), x, y);
