@@ -80,7 +80,6 @@ class GameClass {
     while (i > 0) {
       if (addStation(new Station((int) random(1, 16) * width / 16, (int) random(1, 9) * height / 9, shapes[(int) random(0, 3)], numStations))) {
         i -= 1;
-
       }
     }
   }
@@ -140,6 +139,7 @@ class GameClass {
       stations.get(i).addPassenger(new Passenger(stations.get(i), stations.get(j)));
     }
     for (Route route : routes) {
+      route.draw();
       for (Metro metro : route.metros) {
         metro.move();
         metro.draw();
@@ -166,7 +166,7 @@ class GameClass {
       if (mouseRelease)
         station.selected = false;
       station.draw();
-      for (int i = 0, j = 60; i < station.passengers.size(); i += 1, j += 35)
+      for (int i = 0, j = 45; i < station.passengers.size(); i += 1, j += 30)
         station.passengers.get(i).draw(station.x + j, station.y);
     }
   }
