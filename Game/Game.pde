@@ -47,7 +47,7 @@ void mouseReleased() {
   mouseDrag = false;
   mousePress = false;
   mouseRelease = true;
-  game.addRoute(a, game.colors.remove(0));
+  game.addRoute(a);
   a.clear();
 }
 
@@ -107,12 +107,15 @@ class GameClass {
     }
   }
 
-  void addRoute(ArrayList<Station> stations, int Color) {
+  void addRoute(ArrayList<Station> stations) {
+    if (colors.size() == 0)
+      return;
     if (stations.size() <= 1)
       return;
-    Route route = new Route(stations, Color);
+    Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
+    stations.clear();
   }
 
   boolean addStation(Station station) {
