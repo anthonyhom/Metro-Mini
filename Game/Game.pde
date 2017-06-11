@@ -284,7 +284,24 @@ class Metro {
 
 }
 
-
+class Trace extends Metro{
+  
+  boolean active = true;
+  
+  Trace(Route route){
+  super(route);
+  beginShape(); 
+  }
+  
+  void makePoint(){
+   curveVertex(x,y);
+   if ((dist(x,y,station.x,station.y) < 10)){
+     endShape();
+     active = false;
+  }
+  
+}
+}
 
 class Passenger {
 
@@ -364,19 +381,16 @@ class Route {
     }
   }
   */
-
+  
   void draw() {
     for (float i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
       line(stations.get((int)i).x, stations.get((int)i).y, stations.get((int)i + 1).x, stations.get((int)i + 1).y);
   }
-  }
+}
+}
   
-  void mouseClicked(){
-    redraw();
-  }
-
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){
     sequence = new Arraylist<Station>();
@@ -396,9 +410,6 @@ class Route {
     }
   }
   */
-}
-
-class Path {}
 
 class Station {
 
