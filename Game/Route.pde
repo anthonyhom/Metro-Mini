@@ -3,7 +3,7 @@ class Route {
   ArrayList<Station> stations;
   ArrayList<Metro> metros;
   int Color;
-  boolean Active;
+  boolean active;
 
   Route(ArrayList<Station> stations, int Color) {
     this.Color = Color;
@@ -25,7 +25,7 @@ class Route {
     }
   }
   */
-  
+  /*
   void draw() {
     for (float i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
@@ -33,7 +33,17 @@ class Route {
       line(stations.get((int)i).x, stations.get((int)i).y, stations.get((int)i + 1).x, stations.get((int)i + 1).y);
   }
 }
-}
+*/
+
+  void draw(){
+    Tracer cart = new Tracer(this);
+    stroke(Color);
+    strokeWeight(10);
+    while (cart.active){
+      cart.move();
+      }
+    }
+  }
   
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){

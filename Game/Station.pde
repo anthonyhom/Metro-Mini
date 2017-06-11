@@ -29,3 +29,4 @@ class Station {
       imageMode(CENTER);
       image(image, x, y);
   }
+}
