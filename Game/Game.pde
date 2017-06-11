@@ -342,6 +342,7 @@ class Route {
   ArrayList<Station> stations;
   ArrayList<Metro> metros;
   int Color;
+  boolean Active;
 
   Route(ArrayList<Station> stations, int Color) {
     this.Color = Color;
@@ -365,11 +366,15 @@ class Route {
   */
 
   void draw() {
-    for (int i = 0; i < stations.size() - 1; i += 1) {
+    for (float i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
-      line(stations.get(i).x, stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
-    }
+      line(stations.get((int)i).x, stations.get((int)i).y, stations.get((int)i + 1).x, stations.get((int)i + 1).y);
+  }
+  }
+  
+  void mouseClicked(){
+    redraw();
   }
 
   /*
