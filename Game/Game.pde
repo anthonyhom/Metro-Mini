@@ -6,7 +6,7 @@ ArrayList<Station> a = new ArrayList<Station>();
 int counter;
 
 void setup() {
-  size(1920, 1080);
+  fullScreen();
   game = new GameClass(new Map("../Maps/Map-London.png"));
   paused = false;
   //frameRate(30);
@@ -249,7 +249,7 @@ class Metro {
       try {
           next = route.stations.get(route.stations.indexOf(next) + direction);
       }
-      catch (ArrayIndexOutOfBoundsException e) { };
+      catch (IndexOutOfBoundsException e) { };
       return next;
   }
 
