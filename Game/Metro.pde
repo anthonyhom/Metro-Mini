@@ -39,9 +39,10 @@ class Metro {
   }
 
   Station getNext() {
-      if (route.stations.indexOf(next) == 0 ||
-      route.stations.indexOf(next) == route.stations.size() - 1);
-      direction *= -1;
+      if (route.stations.indexOf(next) == 0)
+          direction = 1;
+      if (route.stations.indexOf(next) == route.stations.size() - 1)
+          direction = -1;
       timer = 100;
       try {
           next = route.stations.get(route.stations.indexOf(next) + direction);
