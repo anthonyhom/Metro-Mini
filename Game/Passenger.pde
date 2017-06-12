@@ -2,7 +2,7 @@ class Passenger {
 
   int patience;
   PImage image;
-  Route path;
+  ArrayList<Station> path;
   String filename, shape;
   Station current, destination;
 

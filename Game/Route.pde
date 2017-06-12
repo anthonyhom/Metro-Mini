@@ -25,6 +25,7 @@ class Route {
     }
   }
   */
+  /*
   void draw() {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
@@ -33,8 +34,7 @@ class Route {
   }
 }
 }
-
-/*
+*/
   void draw(){
     Tracer cart = new Tracer(this);
     stroke(Color);
@@ -42,9 +42,9 @@ class Route {
     while (cart.active){
       cart.move();
       }
+      endShape();
     }
   }
-  */
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){
     sequence = new Arraylist<Station>();
