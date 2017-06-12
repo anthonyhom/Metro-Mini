@@ -1,13 +1,10 @@
 # Metro-Mini
 Final Project Term 2
 
-```html
-<!DOCTYPE html>
-<html>
-<h1>Project Description</h1>
+---Project Description---
 A mimic of the original Mini Metro game, Metro Mini is a take on simulating public transportation through random spawn events, user-drawn pathways, time constraints, and minimalistic graphic elements. Players are tasked with connecting neighboring stations and enabling passengers to travel from start to end
 
-<h1>Instructions</h1>
+---Instructions---
 
 Open and run "Game/Game.pde" in Processing.
 Stations will spawn in random positions on the map. Connect the stations by dragging between them.
@@ -15,7 +12,7 @@ Passengers will appear at random stations with destinations in mind. Make sure t
 Score, or the number of passengers who reach their station, is shown in upper right corner.
 You can press the escape key or the spacebar to pause the game. Re-press the keys to resume back to the game. 
 
-<h1>Bugs</h1>
+---Bugs---
 
 Game will display a blank screen on launch (Restart the game).
 Cars may not always move in the exact sequence the route is drawn.
@@ -23,7 +20,8 @@ Preceding lines may disappear after the drawn line. But cars were still able to 
 Game froze after a line was drawn.
 Game froze when overlapping lines. 
 
-<h1>DevelopmentLog</h1>
+---DevelopmentLog---
+
 6/1/17
 Jonathan and Anthony worked on processing the image of the map as our background image for the game.
 6/2/17
@@ -45,4 +43,4 @@ Trying to attempt curved lines by using curve and curvevertex. Had to typecast s
 6/11/17
 Fixed display of lines. But metros were still moving in a different sequence to the route that is drawn. -> Robustified tracer class to follow path that metro takes. 
 
-</html>
+
