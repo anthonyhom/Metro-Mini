@@ -54,12 +54,14 @@ class GameClass {
 
   void addRoute(ArrayList<Station> stations) {
     if (colors.size() == 0)
-      return;
+        return;
     if (stations.size() <= 1)
-      return;
+        return;
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
+    for (Station station : route.stations)
+        station.routes.add(route);
   }
 
   boolean addStation(Station station) {

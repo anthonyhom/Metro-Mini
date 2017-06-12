@@ -1,6 +1,7 @@
 class Station {
 
   ArrayList<Passenger> passengers;
+  ArrayList<Route> routes;
   boolean selected;
   int x, y, id;
   PImage image;
@@ -11,6 +12,7 @@ class Station {
     this.id = id;
     this.image = loadImage(this.filename);
     this.passengers = new ArrayList<Passenger>();
+    this.routes = new ArrayList<Route>();
     this.selected = false;
     this.shape = shape;
     this.x = x;
