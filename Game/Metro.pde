@@ -21,27 +21,34 @@ class Metro {
   }
 
   void load() {
-      for (int i = 0; next.passengers.size() > 0 && i < next.passengers.size() && passengers.size() < 6; i += 1) {
+      for (int i = 0; x == next.x && y == next.y && next.passengers.size() > 0 && i < next.passengers.size() && passengers.size() < 6; i += 1) {
           try {
-          if (next.passengers.get(i).path.get(0).id == route.stations.get(route.stations.indexOf(next) + direction()).id) {
-              passengers.add(next.passengers.remove(i));
-              i -= 1;
-          } }
+              if (next.passengers.get(i).path.get(0).id == getNext().id) {
+                  passengers.add(next.passengers.remove(i));
+                  i -= 1;
+              }
+          }
           catch (IndexOutOfBoundsException e) { };
       }
   }
 
   void unload() {
     int i = 0;
-    while (x == next.x && y == next.y && i < passengers.size()) {
-      if (passengers.get(i).destination.id == next.id) {
-        passengers.remove(i);
-        counter += 1;
-      }
-      else
-        i += 1;
+    while (x == next.x && y == next.y && i < passengers.size() && passengers.size() > 0) {
+        if (next.id == passengers.get(i).destination.id) {
+            passengers.remove(i);
+            counter += 1;
+        }
+        else if (getNext().id != passengers.get(i).path.get(0).id) {
+            passengers.get(i).path.remove(0);
+            next.addPassenger(passengers.remove(i));
+        }
+        else {
+            passengers.get(i).path.remove(0);
+            i += 1;
+        }
     }
-  }
+}
 
   int direction() {
       if (route.stations.indexOf(next) == 0)
@@ -58,17 +65,17 @@ class Metro {
           direction = -1;
       timer = 100;
       try {
-          next = route.stations.get(route.stations.indexOf(next) + direction);
+          return route.stations.get(route.stations.indexOf(next) + direction);
       }
       catch (IndexOutOfBoundsException e) { };
-      return next;
+      return null;
   }
 
   void move() {
       unload();
       load();
       if (x == next.x && y == next.y)
-      getNext();
+      next = getNext();
       if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
       x -= speed;
       if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)

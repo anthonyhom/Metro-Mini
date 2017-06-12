@@ -49,7 +49,6 @@ class Passenger {
                     path.add(0, s);
                     s = s.previous;
                 }
-                System.out.println("TRUE");
                 for (Station station : game.stations)
                     station.visited = false;
                 return;
