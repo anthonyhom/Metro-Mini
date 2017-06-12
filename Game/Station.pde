@@ -2,7 +2,7 @@ class Station {
 
   ArrayList<Passenger> passengers;
   ArrayList<Route> routes;
-  boolean selected;
+  boolean selected, visited;
   int x, y, id;
   PImage image;
   String filename, shape;

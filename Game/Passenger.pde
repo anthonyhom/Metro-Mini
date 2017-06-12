@@ -14,6 +14,7 @@ class Passenger {
     this.destination = destination;
     this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
     this.image = loadImage(filename);
+    this.patience = 10000;
   }
 
   Passenger(Station current, Station destination) {
@@ -21,6 +22,7 @@ class Passenger {
     this.destination = destination;
     this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
     this.image = loadImage(filename);
+    this.patience = 10000;
   }
 
   /*

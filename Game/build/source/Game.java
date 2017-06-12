@@ -4,6 +4,7 @@ import processing.event.*;
 import processing.opengl.*; 
 
 import java.util.*; 
+import java.util.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 
@@ -275,15 +276,29 @@ class Metro {
       load();
       if (x == next.x && y == next.y)
       getNext();
-      if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
-      x -= speed;
-      if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
-      x += speed;
-      if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
-      y -= speed;
-      if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
-      y += speed;
       timer -= 1;
+      if (direction == 1) {
+          if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
+          x -= speed;
+          if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
+          x += speed;
+          if (y == next.y) return;
+          if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
+          y -= speed;
+          if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
+          y += speed;
+      }
+      else {
+          if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
+          y -= speed;
+          if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
+          y += speed;
+          if (y == next.y) return;
+          if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
+          x -= speed;
+          if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
+          x += speed;
+      }
   }
 
   public void draw() {
@@ -304,7 +319,7 @@ class Passenger {
 
   int patience;
   PImage image;
-  Route path;
+  ArrayList<Station> path;
   String filename, shape;
   Station current, destination;
 
@@ -347,6 +362,29 @@ class Passenger {
   }
 
 }
+
+
+public class QueueFrontier {
+
+    Queue<Station> stations;
+
+    public QueueFrontier() {
+        stations = new LinkedList<Station>();
+    }
+
+    public void add(Station s) {
+        stations.add(s);
+    }
+
+    public Station next() {
+        return stations.remove();
+    }
+
+    public int size() {
+        return stations.size();
+    }
+
+}
 class Route {
 
   ArrayList<Station> stations;
@@ -374,7 +412,8 @@ class Route {
     }
   }
   */
-  public void draw() {
+  /*
+  void draw() {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
@@ -382,18 +421,17 @@ class Route {
   }
 }
 }
-
-/*
-  void draw(){
+*/
+  public void draw(){
     Tracer cart = new Tracer(this);
     stroke(Color);
     strokeWeight(10);
     while (cart.active){
       cart.move();
       }
+      endShape();
     }
   }
-  */
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){
     sequence = new Arraylist<Station>();
@@ -417,7 +455,7 @@ class Station {
 
   ArrayList<Passenger> passengers;
   ArrayList<Route> routes;
-  boolean selected;
+  boolean selected, visited;
   int x, y, id;
   PImage image;
   String filename, shape;
@@ -448,36 +486,40 @@ class Station {
   }
 }
 class Tracer extends Metro {
-  
+
+  byte traversal = 0;
   boolean active = true;
-  
-  Tracer(Route route){
-  super(route);
-  noFill();
-  beginShape(); 
- }
-  public void makePoint(){
-   curveVertex(x,y);
-   if (dist(x,y,next.x,next.y) < 100){
-     endShape();
-     active = false;
-    }
-    System.out.println("hello");
+
+  Tracer(Route route) {
+    super(route);
+    noFill();
+    beginShape();
   }
-  
-    public void move(){
-    if (x == next.x && y == next.y)
+
+  public void makePoint() {
+    curveVertex(x, y);
+    if (dist(x, y, next.x, next.y) < 10) {
       getNext();
-      if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
+      endShape();
+      if (traversal == 0) {
+        traversal++;
+        beginShape();
+      } else
+        active = false;
+    }
+  }
+
+  public void move() {
+    if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
       x -= speed;
-      if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
+    if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
       x += speed;
-      if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
+    if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
       y -= speed;
-      if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
+    if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
       y += speed;
-      timer -= 1;
-      makePoint();
+    timer -= 1;
+    makePoint();
   }
 }
   public void settings() {  fullScreen(); }
