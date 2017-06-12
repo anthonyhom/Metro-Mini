@@ -2,6 +2,7 @@
 Final Project Term 2
 
 ---Project Description---
+
 A mimic of the original Mini Metro game, Metro Mini is a take on simulating public transportation through random spawn events, user-drawn pathways, time constraints, and minimalistic graphic elements. Players are tasked with connecting neighboring stations and enabling passengers to travel from start to end
 
 ---Instructions---
