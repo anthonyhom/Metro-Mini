@@ -51,5 +51,5 @@ void mouseReleased() {
   mousePress = false;
   mouseRelease = true;
   game.addRoute(stationsToAdd);
-  stationsToAdd.clear();
+  stationsToAdd = new ArrayList<Station>();
 }
