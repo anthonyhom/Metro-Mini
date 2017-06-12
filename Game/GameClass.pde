@@ -7,7 +7,7 @@ class GameClass {
   int numColors, numStations, proc;
   Map map;
   String[] shapes = new String[] {"Circle", "Square", "Triangle"};
-
+  
   GameClass() {
     this.colors = new ArrayList<Integer>();
     colors.add(color(236, 52, 46));
@@ -60,6 +60,9 @@ class GameClass {
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
+    for (Station station : stations){
+      station.selected = false;
+    }
     stations.clear();
   }
 
@@ -104,8 +107,8 @@ class GameClass {
           image(ripple, station.x, station.y);
         }
       }
-      if (station.selected && a.indexOf(station) == -1)
-        a.add(station);
+      if (station.selected && stationsToAdd.indexOf(station) == -1)
+        stationsToAdd.add(station);
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
             mouseY > station.y - 45 && mouseY < station.y + 45) {

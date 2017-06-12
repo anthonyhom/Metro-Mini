@@ -2,7 +2,7 @@ import java.util.*;
 
 GameClass game;
 boolean mouseDrag, mousePress, mouseRelease, paused = false;
-ArrayList<Station> a = new ArrayList<Station>();
+ArrayList<Station> stationsToAdd = new ArrayList<Station>();
 int counter;
 
 void setup() {
@@ -26,7 +26,7 @@ void draw() {
   text(game.proc + "", 90, 90);
   text(counter + "", width - 90, 90);
 }
-
+// esc and spacebar pauses the game 
 void keyPressed() {
   if (key == 27) {
     key = 32;
@@ -50,6 +50,6 @@ void mouseReleased() {
   mouseDrag = false;
   mousePress = false;
   mouseRelease = true;
-  game.addRoute(a);
-  a.clear();
+  game.addRoute(stationsToAdd);
+  stationsToAdd.clear();
 }
