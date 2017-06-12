@@ -54,8 +54,7 @@ public void keyPressed() {
       paused = ! paused;
   }
   if (key == 96) {
-      for (int i = game.routes.size() - 1; i >= 0; i -= 1)
-          game.colors.add(0, game.routes.remove(i).Color);
+      setup();
   }
 }
 
@@ -252,7 +251,7 @@ class Metro {
                   i -= 1;
               }
           }
-          catch (IndexOutOfBoundsException e) { };
+          catch (IndexOutOfBoundsException e) { System.out.println("ArrayIndexOutOfBoundsException: load()"); };
       }
   }
 

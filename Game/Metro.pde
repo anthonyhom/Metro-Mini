@@ -28,7 +28,7 @@ class Metro {
                   i -= 1;
               }
           }
-          catch (IndexOutOfBoundsException e) { };
+          catch (IndexOutOfBoundsException e) { System.out.println("ArrayIndexOutOfBoundsException: load()"); };
       }
   }
 
