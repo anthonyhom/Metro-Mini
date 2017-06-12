@@ -15,3 +15,4 @@ Score is shown in upper right corner
 Bugs
 
 Game will display a blank screen on launch (Restart the game)
+Cars may not always move in the exact sequence the route is drawn
