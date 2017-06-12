@@ -1,4 +1,4 @@
-# Metro-Mini
+# Anthony Hom, Jonathan Huang, Metro-Mini
 Final Project Term 2
 
 ---Project Description---
