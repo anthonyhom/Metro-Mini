@@ -47,10 +47,13 @@ public void draw() {
 // esc and spacebar pauses the game
 public void keyPressed() {
   if (key == 27) {
-    key = 32;
+      key = 32;
   }
   if (key == 32) {
-    paused = ! paused;
+      paused = ! paused;
+  }
+  if (key == 96) {
+      game.routes.clear();
   }
 }
 
