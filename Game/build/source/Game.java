@@ -33,7 +33,7 @@ public void setup() {
 }
 
 public void draw() {
-  game.run();
+  if (! paused) game.run();
   if (! paused)
     this.game.proc += 1;
   else {
@@ -41,6 +41,7 @@ public void draw() {
     rect(0, 0, 1920, 1080);
   }
   fill(0);
+  textMode(CENTER);
   textSize(32);
   text(game.proc + "", 90, 90);
   text(counter + "", width - 90, 90);
@@ -139,13 +140,14 @@ class GameClass {
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
-    for (Station station : route.stations) {
+    for (Station station : route.stations)
         station.routes.add(route);
+    for (Station station : game.stations) {
         for (Passenger passenger : station.passengers) {
             passenger.findPath();
         }
     }
-  }
+}
 
   public boolean addStation(Station station) {
     if (map.image.get(station.x, station.y) == color(224)) {
@@ -246,7 +248,8 @@ class Metro {
   public void load() {
       for (int i = 0; x == next.x && y == next.y && next.passengers.size() > 0 && i < next.passengers.size() && passengers.size() < 6; i += 1) {
           try {
-              if (next.passengers.get(i).path.get(0).id == getNext().id) {
+              if (next.passengers.get(i).path.get(0).id == getNext().id ||
+                  next.passengers.get(i).path.get(0).id == next.id) {
                   passengers.add(next.passengers.remove(i));
                   i -= 1;
               }

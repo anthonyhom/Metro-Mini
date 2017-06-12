@@ -11,7 +11,7 @@ Open and run "Game/Game.pde" in Processing.
 Stations will spawn in random positions on the map. Connect the stations by dragging between them.
 Passengers will appear at random stations with destinations in mind. Make sure the routes you draw enable them to reach their destinations.
 Score, or the number of passengers who reach their station, is shown in upper right corner.
-You can press the escape key or the spacebar to pause the game. Re-press the keys to resume back to the game. 
+You can press the escape key or the spacebar to pause the game. Re-press the keys to resume back to the game.
 
 ---Bugs---
 
@@ -19,7 +19,8 @@ Game will display a blank screen on launch (Restart the game).
 Cars may not always move in the exact sequence the route is drawn.
 Preceding lines may disappear after the drawn line. But cars were still able to move.
 Game froze after a line was drawn.
-Game froze when overlapping lines. 
+Game froze when overlapping lines.
+Cars travel in trapezoidal paths.
 
 ---DevelopmentLog---
 
@@ -38,10 +39,8 @@ Connected Metro class and Route class to enable metros to travel across drawn li
 6/8/17
 Added colors to the routes. Encountered freezing when trying to have metro move. But was fixed.
 6/9/17
-Wrote loading, unloading, and move method for metro. Also displayed how passengers would appear when traveling on the metro. 
+Wrote loading, unloading, and move method for metro. Also displayed how passengers would appear when traveling on the metro.
 6/10/17
 Trying to attempt curved lines by using curve and curvevertex. Had to typecast some ints to float. -> Ignore the code. Created tracer class to leave points below so that it can draw the route in which the metro is traveling. Separated classes into different files.
 6/11/17
-Fixed display of lines. But metros were still moving in a different sequence to the route that is drawn. -> Robustified tracer class to follow path that metro takes. 
-
-
+Fixed display of lines. But metros were still moving in a different sequence to the route that is drawn. -> Robustified tracer class to follow path that metro takes.

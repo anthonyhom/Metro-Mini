@@ -14,7 +14,7 @@ void setup() {
 }
 
 void draw() {
-  game.run();
+  if (! paused) game.run();
   if (! paused)
     this.game.proc += 1;
   else {
@@ -22,6 +22,7 @@ void draw() {
     rect(0, 0, 1920, 1080);
   }
   fill(0);
+  textMode(CENTER);
   textSize(32);
   text(game.proc + "", 90, 90);
   text(counter + "", width - 90, 90);
