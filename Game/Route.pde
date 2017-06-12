@@ -26,10 +26,10 @@ class Route {
   }
   */
   void draw() {
-    for (float i = 0; i < stations.size() - 1; i += 1) {
+    for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
-      line(stations.get((int)i).x, stations.get((int)i).y, stations.get((int)i + 1).x, stations.get((int)i + 1).y);
+      line(stations.get(i).x, stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
   }
 }
 }

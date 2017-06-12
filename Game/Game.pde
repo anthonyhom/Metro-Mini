@@ -26,7 +26,7 @@ void draw() {
   text(game.proc + "", 90, 90);
   text(counter + "", width - 90, 90);
 }
-// esc and spacebar pauses the game 
+// esc and spacebar pauses the game
 void keyPressed() {
   if (key == 27) {
     key = 32;
@@ -52,4 +52,5 @@ void mouseReleased() {
   mouseRelease = true;
   game.addRoute(stationsToAdd);
   stationsToAdd.clear();
+  for (Station station : game.stations) station.selected = false;
 }

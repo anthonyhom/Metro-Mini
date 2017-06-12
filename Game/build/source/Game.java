@@ -20,7 +20,7 @@ public class Game extends PApplet {
 
 GameClass game;
 boolean mouseDrag, mousePress, mouseRelease, paused = false;
-ArrayList<Station> a = new ArrayList<Station>();
+ArrayList<Station> stationsToAdd = new ArrayList<Station>();
 int counter;
 
 public void setup() {
@@ -44,7 +44,7 @@ public void draw() {
   text(game.proc + "", 90, 90);
   text(counter + "", width - 90, 90);
 }
-
+// esc and spacebar pauses the game
 public void keyPressed() {
   if (key == 27) {
     key = 32;
@@ -68,12 +68,10 @@ public void mouseReleased() {
   mouseDrag = false;
   mousePress = false;
   mouseRelease = true;
-  game.addRoute(a);
-  a.clear();
+  game.addRoute(stationsToAdd);
+  stationsToAdd.clear();
+  for (Station station : game.stations) station.selected = false;
 }
-
-
-
 class GameClass {
 
   ArrayList<Integer> colors;
@@ -83,7 +81,7 @@ class GameClass {
   int numColors, numStations, proc;
   Map map;
   String[] shapes = new String[] {"Circle", "Square", "Triangle"};
-
+  
   GameClass() {
     this.colors = new ArrayList<Integer>();
     colors.add(color(236, 52, 46));
@@ -136,6 +134,9 @@ class GameClass {
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
+    for (Station station : stations){
+      station.selected = false;
+    }
     stations.clear();
   }
 
@@ -180,8 +181,8 @@ class GameClass {
           image(ripple, station.x, station.y);
         }
       }
-      if (station.selected && a.indexOf(station) == -1)
-        a.add(station);
+      if (station.selected && stationsToAdd.indexOf(station) == -1)
+        stationsToAdd.add(station);
       if (mousePress) {
         if (mouseX > station.x - 45 && mouseX < station.x + 45 &&
             mouseY > station.y - 45 && mouseY < station.y + 45) {
@@ -197,9 +198,6 @@ class GameClass {
   }
 
 }
-
-
-
 class Map {
 
   PImage image;
@@ -216,9 +214,6 @@ class Map {
   }
 
 }
-
-
-
 class Metro {
 
   ArrayList<Metro> cars;
@@ -267,7 +262,7 @@ class Metro {
       try {
           next = route.stations.get(route.stations.indexOf(next) + direction);
       }
-      catch (ArrayIndexOutOfBoundsException e) { };
+      catch (IndexOutOfBoundsException e) { };
       return next;
   }
 
@@ -301,9 +296,6 @@ class Metro {
   }
 
 }
-
-
-
 class Passenger {
 
   int patience;
@@ -351,15 +343,12 @@ class Passenger {
   }
 
 }
-
-
-
-
 class Route {
 
   ArrayList<Station> stations;
   ArrayList<Metro> metros;
   int Color;
+  boolean active;
 
   Route(ArrayList<Station> stations, int Color) {
     this.Color = Color;
@@ -381,15 +370,26 @@ class Route {
     }
   }
   */
-
   public void draw() {
     for (int i = 0; i < stations.size() - 1; i += 1) {
       stroke(Color);
       strokeWeight(10);
       line(stations.get(i).x, stations.get(i).y, stations.get(i + 1).x, stations.get(i + 1).y);
+  }
+}
+}
+
+/*
+  void draw(){
+    Tracer cart = new Tracer(this);
+    stroke(Color);
+    strokeWeight(10);
+    while (cart.active){
+      cart.move();
+      }
     }
   }
-
+  */
   /*
    ArrayList<Station> getPath(GameClass game,Station current, Station destination){
     sequence = new Arraylist<Station>();
@@ -409,10 +409,6 @@ class Route {
     }
   }
   */
-}
-
-class Path {}
-
 class Station {
 
   ArrayList<Passenger> passengers;
@@ -444,9 +440,41 @@ class Station {
       imageMode(CENTER);
       image(image, x, y);
   }
-
 }
-  public void settings() {  size(1920, 1080); }
+class Tracer extends Metro {
+  
+  boolean active = true;
+  
+  Tracer(Route route){
+  super(route);
+  noFill();
+  beginShape(); 
+ }
+  public void makePoint(){
+   curveVertex(x,y);
+   if (dist(x,y,next.x,next.y) < 100){
+     endShape();
+     active = false;
+    }
+    System.out.println("hello");
+  }
+  
+    public void move(){
+    if (x == next.x && y == next.y)
+      getNext();
+      if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
+      x -= speed;
+      if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
+      x += speed;
+      if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
+      y -= speed;
+      if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
+      y += speed;
+      timer -= 1;
+      makePoint();
+  }
+}
+  public void settings() {  fullScreen(); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "Game" };
     if (passedArgs != null) {
