@@ -53,7 +53,8 @@ public void keyPressed() {
       paused = ! paused;
   }
   if (key == 96) {
-      game.routes.clear();
+      for (int i = game.routes.size() - 1; i >= 0; i -= 1)
+          game.colors.add(0, game.routes.remove(i).Color);
   }
 }
 
