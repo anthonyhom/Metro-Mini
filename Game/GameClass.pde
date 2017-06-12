@@ -7,7 +7,7 @@ class GameClass {
   int numColors, numStations, proc;
   Map map;
   String[] shapes = new String[] {"Circle", "Square", "Triangle"};
-  
+
   GameClass() {
     this.colors = new ArrayList<Integer>();
     colors.add(color(236, 52, 46));
@@ -60,10 +60,6 @@ class GameClass {
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
-    for (Station station : stations){
-      station.selected = false;
-    }
-    stations.clear();
   }
 
   boolean addStation(Station station) {
