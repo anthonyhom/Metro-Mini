@@ -5,6 +5,7 @@ class Station {
   boolean selected, visited;
   int x, y, id;
   PImage image;
+  Station previous;
   String filename, shape;
 
   Station(int x, int y, String shape, int id) {

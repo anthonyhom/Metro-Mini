@@ -276,29 +276,15 @@ class Metro {
       load();
       if (x == next.x && y == next.y)
       getNext();
+      if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
+      x -= speed;
+      if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
+      x += speed;
+      if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
+      y -= speed;
+      if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
+      y += speed;
       timer -= 1;
-      if (direction == 1) {
-          if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
-          x -= speed;
-          if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
-          x += speed;
-          if (y == next.y) return;
-          if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
-          y -= speed;
-          if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
-          y += speed;
-      }
-      else {
-          if (abs((y - speed) - next.y) < abs(y - next.y) && timer < 0)
-          y -= speed;
-          if (abs((y + speed) - next.y) < abs(y - next.y) && timer < 0)
-          y += speed;
-          if (y == next.y) return;
-          if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
-          x -= speed;
-          if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
-          x += speed;
-      }
   }
 
   public void draw() {
@@ -317,49 +303,67 @@ class Metro {
 }
 class Passenger {
 
-  int patience;
-  PImage image;
-  ArrayList<Station> path;
-  String filename, shape;
-  Station current, destination;
+    int patience;
+    PImage image;
+    ArrayList<Station> path;
+    String filename, shape;
+    Station current, destination;
 
-  Passenger() {
-    this.patience = 10000;
-  }
-
-  Passenger(Station destination) {
-    this.destination = destination;
-    this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
-    this.image = loadImage(filename);
-  }
-
-  Passenger(Station current, Station destination) {
-    this.current = current;
-    this.destination = destination;
-    this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
-    this.image = loadImage(filename);
-  }
-
-  /*
-  void findPath() {
-    ArrayList<Station> a = new ArrayList<Station>();
-    Stack<Station> stack = new Stack();
-    Station temp = current;
-    stack.add(temp);
-    while (stack.size() > 0) {
-      temp = stack.pop();
-      if (temp.id == destination.id) {
-        a.add(temp);
-        return;
-      }
+    Passenger() {
+        this.patience = 10000;
     }
-  }
-  */
 
-  public void draw(int x, int y) {
-    imageMode(CENTER);
-    image(image, x, y);
-  }
+    Passenger(Station destination) {
+        this.destination = destination;
+        this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
+        this.image = loadImage(filename);
+        this.patience = 10000;
+    }
+
+    Passenger(Station current, Station destination) {
+        this.current = current;
+        this.destination = destination;
+        this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
+        this.image = loadImage(filename);
+        this.patience = 10000;
+    }
+
+    public void findPath() {
+        QueueFrontier q = new QueueFrontier();
+        q.add(current);
+        Station s = current;
+        current.visited = true;
+        while (q.size() > 0) {
+            Station temp = s;
+            s = q.next();
+            s.previous = temp;
+            if (s.id == destination.id) {
+                while (s.previous != null) {
+                    path.add(0, s);
+                    s = s.previous;
+                }
+                for (Station station : game.stations)
+                    station.visited = false;
+                return;
+            }
+            s.visited = true;
+            for (Route route : s.routes) {
+                if (0 <= route.stations.indexOf(s) - 1 &&
+                    route.stations.indexOf(s) - 1 < route.stations.size() &&
+                    route.stations.get(route.stations.indexOf(s) - 1).visited == false)
+                    q.add(route.stations.get(route.stations.indexOf(s) - 1));
+                if (0 <= route.stations.indexOf(s) + 1 &&
+                    route.stations.indexOf(s) + 1 < route.stations.size() &&
+                    route.stations.get(route.stations.indexOf(s) + 1).visited == false)
+                    q.add(route.stations.get(route.stations.indexOf(s) + 1));
+            }
+        }
+    }
+
+    public void draw(int x, int y) {
+        imageMode(CENTER);
+        image(image, x, y);
+    }
 
 }
 
@@ -458,6 +462,7 @@ class Station {
   boolean selected, visited;
   int x, y, id;
   PImage image;
+  Station previous;
   String filename, shape;
 
   Station(int x, int y, String shape, int id) {

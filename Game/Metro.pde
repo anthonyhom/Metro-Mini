@@ -56,7 +56,6 @@ class Metro {
       load();
       if (x == next.x && y == next.y)
       getNext();
-      if (direction == 1) {
       if (abs((x - speed) - next.x) < abs(x - next.x) && timer < 0)
       x -= speed;
       if (abs((x + speed) - next.x) < abs(x - next.x) && timer < 0)
