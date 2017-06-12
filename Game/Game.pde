@@ -52,5 +52,4 @@ void mouseReleased() {
   mouseRelease = true;
   game.addRoute(stationsToAdd);
   stationsToAdd.clear();
-  for (Station station : game.stations) station.selected = false;
 }
