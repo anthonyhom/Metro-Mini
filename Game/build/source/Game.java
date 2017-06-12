@@ -70,6 +70,8 @@ public void mouseReleased() {
   mouseRelease = true;
   game.addRoute(stationsToAdd);
   stationsToAdd = new ArrayList<Station>();
+  for (Station station : game.stations)
+      station.selected = false;
 }
 class GameClass {
 
