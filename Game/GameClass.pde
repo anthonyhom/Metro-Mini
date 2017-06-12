@@ -60,8 +60,12 @@ class GameClass {
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
-    for (Station station : route.stations)
+    for (Station station : route.stations) {
         station.routes.add(route);
+        for (Passenger passenger : station.passengers) {
+            passenger.findPath();
+        }
+    }
   }
 
   boolean addStation(Station station) {

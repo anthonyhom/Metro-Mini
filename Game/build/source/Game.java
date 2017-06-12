@@ -140,8 +140,12 @@ class GameClass {
     Route route = new Route(stations, colors.remove(0));
     route.metros.add(new Metro(route));
     routes.add(route);
-    for (Station station : route.stations)
+    for (Station station : route.stations) {
         station.routes.add(route);
+        for (Passenger passenger : station.passengers) {
+            passenger.findPath();
+        }
+    }
   }
 
   public boolean addStation(Station station) {
@@ -241,9 +245,14 @@ class Metro {
   }
 
   public void load() {
-    while (x == next.x && y == next.y && next.passengers.size() > 0 && passengers.size() < 6) {
-      passengers.add(next.passengers.remove(0));
-    }
+      for (int i = 0; next.passengers.size() > 0 && i < next.passengers.size() && passengers.size() < 6; i += 1) {
+          try {
+          if (next.passengers.get(i).path.get(0).id == route.stations.get(route.stations.indexOf(next) + direction()).id) {
+              passengers.add(next.passengers.remove(i));
+              i -= 1;
+          } }
+          catch (IndexOutOfBoundsException e) { };
+      }
   }
 
   public void unload() {
@@ -256,6 +265,14 @@ class Metro {
       else
         i += 1;
     }
+  }
+
+  public int direction() {
+      if (route.stations.indexOf(next) == 0)
+          return 1;
+      if (route.stations.indexOf(next) == route.stations.size() - 1)
+          return -1;
+      return direction;
   }
 
   public Station getNext() {
@@ -310,14 +327,18 @@ class Passenger {
     Station current, destination;
 
     Passenger() {
+        this.path = new ArrayList<Station>();
         this.patience = 10000;
+        this.findPath();
     }
 
     Passenger(Station destination) {
         this.destination = destination;
         this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
         this.image = loadImage(filename);
+        this.path = new ArrayList<Station>();
         this.patience = 10000;
+        this.findPath();
     }
 
     Passenger(Station current, Station destination) {
@@ -325,10 +346,16 @@ class Passenger {
         this.destination = destination;
         this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
         this.image = loadImage(filename);
+        this.path = new ArrayList<Station>();
         this.patience = 10000;
+        this.findPath();
     }
 
     public void findPath() {
+        for (Station station : game.stations) {
+            station.previous = null;
+            station.visited = false;
+        }
         QueueFrontier q = new QueueFrontier();
         q.add(current);
         Station s = current;
@@ -338,10 +365,11 @@ class Passenger {
             s = q.next();
             s.previous = temp;
             if (s.id == destination.id) {
-                while (s.previous != null) {
+                while (s.previous != null && s != current) {
                     path.add(0, s);
                     s = s.previous;
                 }
+                System.out.println("TRUE");
                 for (Station station : game.stations)
                     station.visited = false;
                 return;

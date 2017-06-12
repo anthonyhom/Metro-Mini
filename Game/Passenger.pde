@@ -7,14 +7,18 @@ class Passenger {
     Station current, destination;
 
     Passenger() {
+        this.path = new ArrayList<Station>();
         this.patience = 10000;
+        this.findPath();
     }
 
     Passenger(Station destination) {
         this.destination = destination;
         this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
         this.image = loadImage(filename);
+        this.path = new ArrayList<Station>();
         this.patience = 10000;
+        this.findPath();
     }
 
     Passenger(Station current, Station destination) {
@@ -22,10 +26,16 @@ class Passenger {
         this.destination = destination;
         this.filename = "../Reference/Passenger-" + this.destination.shape + ".png";
         this.image = loadImage(filename);
+        this.path = new ArrayList<Station>();
         this.patience = 10000;
+        this.findPath();
     }
 
     void findPath() {
+        for (Station station : game.stations) {
+            station.previous = null;
+            station.visited = false;
+        }
         QueueFrontier q = new QueueFrontier();
         q.add(current);
         Station s = current;
@@ -35,10 +45,11 @@ class Passenger {
             s = q.next();
             s.previous = temp;
             if (s.id == destination.id) {
-                while (s.previous != null) {
+                while (s.previous != null && s != current) {
                     path.add(0, s);
                     s = s.previous;
                 }
+                System.out.println("TRUE");
                 for (Station station : game.stations)
                     station.visited = false;
                 return;

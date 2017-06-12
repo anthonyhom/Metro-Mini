@@ -21,9 +21,14 @@ class Metro {
   }
 
   void load() {
-    while (x == next.x && y == next.y && next.passengers.size() > 0 && passengers.size() < 6) {
-      passengers.add(next.passengers.remove(0));
-    }
+      for (int i = 0; next.passengers.size() > 0 && i < next.passengers.size() && passengers.size() < 6; i += 1) {
+          try {
+          if (next.passengers.get(i).path.get(0).id == route.stations.get(route.stations.indexOf(next) + direction()).id) {
+              passengers.add(next.passengers.remove(i));
+              i -= 1;
+          } }
+          catch (IndexOutOfBoundsException e) { };
+      }
   }
 
   void unload() {
@@ -36,6 +41,14 @@ class Metro {
       else
         i += 1;
     }
+  }
+
+  int direction() {
+      if (route.stations.indexOf(next) == 0)
+          return 1;
+      if (route.stations.indexOf(next) == route.stations.size() - 1)
+          return -1;
+      return direction;
   }
 
   Station getNext() {
