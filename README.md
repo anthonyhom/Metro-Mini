@@ -21,6 +21,10 @@ Preceding lines may disappear after the drawn line. But cars were still able to 
 Game froze after a line was drawn.
 Game froze when overlapping lines.
 Cars travel in trapezoidal paths.
+Cars will not return nor load with passengers after drawing a line connecting the stations.
+Random cars will move on an invisible route.
+Cars stop moving after a certain time. 
+Cars do not create a return line. 
 
 ---DevelopmentLog---
 
