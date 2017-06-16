@@ -23,8 +23,10 @@ class Metro {
   void load() {
       for (int i = 0; x == next.x && y == next.y && next.passengers.size() > 0 && i < next.passengers.size() && passengers.size() < 6; i += 1) {
           try {
-              if (next.passengers.get(i).path.get(0).id == getNext().id ||
+              /*if (next.passengers.get(i).path.get(0).id == getNext().id ||
                   next.passengers.get(i).path.get(0).id == next.id) {
+                    */
+                     if (next.passengers.get(i).path.get(0).id == getNext().id) {
                   passengers.add(next.passengers.remove(i));
                   i -= 1;
               }
@@ -66,7 +68,9 @@ class Metro {
           direction = -1;
       timer = 100;
       try {
-          return route.stations.get(route.stations.indexOf(next) + direction);
+          next = route.stations.get(route.stations.indexOf(next) + direction);
+          //return route.stations.get(route.stations.indexOf(next) + direction);
+          //current code displays both paths
       }
       catch (IndexOutOfBoundsException e) { };
       return null;
