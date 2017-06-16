@@ -66,8 +66,8 @@ class Metro {
           direction = -1;
       timer = 100;
       try {
-          next = route.stations.get(route.stations.indexOf(next) + direction);
-          //return route.stations.get(route.stations.indexOf(next) + direction);
+          //next = route.stations.get(route.stations.indexOf(next) + direction);
+          return route.stations.get(route.stations.indexOf(next) + direction);
           //current code displays both paths
       }
       catch (IndexOutOfBoundsException e) { };

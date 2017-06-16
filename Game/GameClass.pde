@@ -62,12 +62,12 @@ class GameClass {
     routes.add(route);
     for (Station station : route.stations)
         station.routes.add(route);
-    for (Station station : game.stations) {
-        for (Passenger passenger : station.passengers) {
-            passenger.findPath();
+    //for (Station station : game.stations) {
+       // for (Passenger passenger : station.passengers) {
+          //  passenger.findPath();
         }
-    }
-}
+   // }
+//}
 
   boolean addStation(Station station) {
     if (map.image.get(station.x, station.y) == color(224)) {
